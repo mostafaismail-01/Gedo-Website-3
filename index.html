@@ -377,10 +377,10 @@ section { padding: 5rem 2rem; }
 .curve-panel p {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 0.75rem;
-  color: rgba(244,237,216,0.45);
-  line-height: 1.55;
-  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: rgba(244,237,216,0.78);
+  line-height: 1.6;
+  margin-top: 0.75rem;
 }
 
 /* ================================================================
@@ -1163,16 +1163,16 @@ section { padding: 5rem 2rem; }
    FEATURE 3 — METAL FLIP CARDS (bio sidebar)
 ================================================================ */
 
-/* Override the existing 5-col grid → 2-col for readable flip backs */
+/* Metal flip cards — 2-col grid, large enough to read */
 .elements-grid {
   grid-template-columns: repeat(2, 1fr) !important;
-  gap: 5px !important;
+  gap: 6px !important;
 }
 
 .el-flip-card {
-  height: 80px;
+  height: 130px;
   cursor: pointer;
-  perspective: 500px;
+  perspective: 700px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .el-flip-card:hover {
@@ -1200,36 +1200,36 @@ section { padding: 5rem 2rem; }
   border: 1px solid rgba(196,160,53,0.38);
   background: var(--green-deep);
   color: var(--gold);
-  padding: 5px 4px;
-  line-height: 1.2;
+  padding: 10px 8px;
+  line-height: 1.3;
   text-align: center;
 }
 
 .el-flip-back {
   transform: rotateY(180deg);
   background: var(--green-mid);
-  gap: 3px;
-  padding: 6px 6px;
-  justify-content: space-evenly;
+  gap: 5px;
+  padding: 10px 10px;
+  justify-content: center;
 }
 
 /* Front face */
-.ef-num  { font-size: 0.45rem; color: var(--copper-light); font-family: var(--font-display); }
-.ef-sym  { font-size: 1.05rem; font-weight: 600; font-family: var(--font-display); line-height: 1; }
-.ef-name { font-size: 0.32rem; letter-spacing: 0.07em; color: var(--copper-light); font-family: var(--font-display); text-transform: uppercase; }
+.ef-num  { font-size: 0.7rem;  color: var(--copper-light); font-family: var(--font-display); }
+.ef-sym  { font-size: 1.6rem;  font-weight: 600; font-family: var(--font-display); line-height: 1; }
+.ef-name { font-size: 0.58rem; letter-spacing: 0.07em; color: var(--copper-light); font-family: var(--font-display); text-transform: uppercase; }
 
 /* Back face */
-.ef-sym-b    { font-size: 0.7rem; font-weight: 700; font-family: var(--font-display); color: var(--gold); }
-.ef-use      { font-size: 0.42rem; color: rgba(244,237,216,0.82); font-family: var(--font-display); line-height: 1.4; }
-.ef-research { font-size: 0.38rem; color: var(--copper-light); font-family: var(--font-display); font-style: italic; line-height: 1.4; }
+.ef-sym-b    { font-size: 1rem;  font-weight: 700; font-family: var(--font-display); color: var(--gold); }
+.ef-use      { font-size: 0.68rem; color: rgba(244,237,216,0.9); font-family: var(--font-display); line-height: 1.45; }
+.ef-research { font-size: 0.6rem;  color: var(--copper-light); font-family: var(--font-display); font-style: italic; line-height: 1.45; }
 
-/* Tap hint on front (mobile) */
+/* Tap hint on front */
 .ef-hint {
-  font-size: 0.28rem;
-  color: rgba(196,160,53,0.35);
+  font-size: 0.52rem;
+  color: rgba(196,160,53,0.45);
   font-family: var(--font-display);
   letter-spacing: 0.06em;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 /* Stop/Eject button */
