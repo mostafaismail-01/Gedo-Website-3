@@ -1253,10 +1253,10 @@ const RECORDS = [
   { src: 'record 01.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
   { src: 'record 02.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
   { src: 'record 03.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
-  { src: 'record 04.jpg', title: 'The String Quartets', artist: 'Beethoven — Hungarian String Quartet' },
-  { src: 'record 05.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
-  { src: 'record 06.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
-  { src: 'record 07.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+  { src: 'record 04.jpg', title: 'The String Quartets', artist: 'Beethoven — Hungarian String Quartet', audio: 'record 04.mp3' },
+  { src: 'record 05.jpg', title: 'TODO: Record title', artist: 'TODO: Artist', audio: 'record 05.mp3' },
+  { src: 'record 06.jpg', title: 'TODO: Record title', artist: 'TODO: Artist', audio: 'record 06.mp3' },
+  { src: 'record 07.jpg', title: 'TODO: Record title', artist: 'TODO: Artist', audio: 'record 07.mp3' },
   { src: 'record 08.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
 ];
 
@@ -2088,22 +2088,16 @@ function stopRecord() {
   /* Hide stop button */
   ttStopBtn.style.display = 'none';
 
-  /* Stop audio if wired up */
-  /* const player = document.getElementById('tt-audio-player');
-     if (player) { player.pause(); player.src = ''; } */
+  /* Stop audio */
+  const player = document.getElementById('tt-audio-player');
+  if (player) { player.pause(); player.currentTime = 0; player.src = ''; }
 }
 
 ttStopBtn.addEventListener('click', stopRecord);
 
-/* ----------------------------------------------------------------
-   playAudio — stub function. Fill in when audio files are ready.
-   trackIndex: 0-based index into the RECORDS array.
----------------------------------------------------------------- */
 function playAudio(trackIndex) {
-  /* Example implementation (uncomment and adapt):
-  ─────────────────────────────────────────────────────────────────
   const record = RECORDS[trackIndex];
-  if (!record.audio) return;                    // no file mapped yet
+  if (!record.audio) return;
 
   let player = document.getElementById('tt-audio-player');
   if (!player) {
@@ -2113,22 +2107,7 @@ function playAudio(trackIndex) {
   }
   player.pause();
   player.src = record.audio;
-  player.play().catch(() => {});                // catch autoplay block
-
-  ─────────────────────────────────────────────────────────────────
-  TRACK → FILE MAPPING (fill in paths as you add audio):
-    Index 0 → 'audio/record-01.mp3'
-    Index 1 → 'audio/record-02.mp3'
-    Index 2 → 'audio/record-03.mp3'
-    Index 3 → 'audio/record-04.mp3'  ← Beethoven String Quartets
-    Index 4 → 'audio/record-05.mp3'
-    Index 5 → 'audio/record-06.mp3'
-    Index 6 → 'audio/record-07.mp3'
-    Index 7 → 'audio/record-08.mp3'
-  ─────────────────────────────────────────────────────────────────
-  */
-  console.log('[Turntable] playAudio called for track index:', trackIndex,
-              '| title:', RECORDS[trackIndex].title);
+  player.play().catch(() => {});
 }
 
 /* ---- Gallery ---- */
