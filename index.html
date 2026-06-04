@@ -6,7 +6,6 @@
 <title>Prof. Ahmed Medhat Shams El Din — Digital Legacy Archive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 
 /* ================================================================
@@ -30,7 +29,6 @@
 
   --font-serif:   'EB Garamond', Georgia, serif;
   --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-arabic:  'Noto Naskh Arabic', serif;
 
   --max-w: 1120px;
   --nav-h: 58px;
@@ -53,10 +51,6 @@ a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font-family: inherit; }
 
 /* Language visibility */
-.show-ar { display: none !important; }
-body.ar .show-ar { display: revert !important; }
-body.ar .show-en { display: none !important; }
-body.ar { font-family: var(--font-arabic); direction: rtl; }
 
 /* ================================================================
    NAV
@@ -217,12 +211,6 @@ body.ar { font-family: var(--font-arabic); direction: rtl; }
   color: var(--parchment);
   line-height: 1.1;
   letter-spacing: 0.03em;
-}
-.hero-name-ar {
-  font-family: var(--font-arabic);
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  color: var(--gold);
-  font-weight: 500;
 }
 .hero-dates {
   font-family: var(--font-display);
@@ -501,9 +489,8 @@ section { padding: 5rem 2rem; }
   color: var(--copper-light); font-family: var(--font-display);
 }
 .pdf-title {
-  font-family: var(--font-arabic);
   font-size: 0.95rem; color: var(--parchment);
-  line-height: 1.55; direction: rtl;
+  line-height: 1.55;
 }
 .pdf-dl {
   display: inline-flex; align-items: center; gap: 0.4rem;
@@ -622,11 +609,6 @@ section { padding: 5rem 2rem; }
 .award-title {
   font-family: var(--font-display);
   font-size: 1.05rem; font-weight: 500; color: var(--green-deep); line-height: 1.35;
-}
-.award-title-ar {
-  font-family: var(--font-arabic);
-  font-size: 0.88rem; color: var(--ink-light);
-  margin-top: 0.3rem; display: block; direction: rtl;
 }
 
 /* ================================================================
@@ -1290,7 +1272,7 @@ section { padding: 5rem 2rem; }
 
 </style>
 </head>
-<body class="en">
+<body>
 
 <!-- ============================================================
      CONTENT DATA — edit these to add/update content
@@ -1424,21 +1406,16 @@ const ELEMENTS = [
   <a href="#hero" class="nav-brand">
     A.M. Shams El Din
     <span class="show-en">1931 – 2008</span>
-    <span class="show-ar">١٩٣١ – ٢٠٠٨</span>
   </a>
   <ul class="nav-links" role="list">
-    <li><a href="#biography"    data-en="Biography"  data-ar="السيرة الذاتية">Biography</a></li>
-    <li><a href="#timeline"     data-en="Timeline"   data-ar="المسيرة">Timeline</a></li>
-    <li><a href="#publications" data-en="Research"   data-ar="الأبحاث">Research</a></li>
-    <li><a href="#awards"       data-en="Awards"     data-ar="الجوائز">Awards</a></li>
-    <li><a href="#medals"       data-en="Medals"     data-ar="الأوسمة">Medals</a></li>
-    <li><a href="#records"      data-en="Records"    data-ar="الأسطوانات">Records</a></li>
-    <li><a href="#gallery"      data-en="Gallery"    data-ar="الصور">Gallery</a></li>
+    <li><a href="#biography"    data-en="Biography">Biography</a></li>
+    <li><a href="#timeline"     data-en="Timeline">Timeline</a></li>
+    <li><a href="#publications" data-en="Research">Research</a></li>
+    <li><a href="#awards"       data-en="Awards">Awards</a></li>
+    <li><a href="#medals"       data-en="Medals">Medals</a></li>
+    <li><a href="#records"      data-en="Records">Records</a></li>
+    <li><a href="#gallery"      data-en="Gallery">Gallery</a></li>
   </ul>
-  <button class="lang-btn" id="lang-toggle" aria-label="Switch language">
-    <span class="show-en">العربية</span>
-    <span class="show-ar">English</span>
-  </button>
 </nav>
 
 <!-- ============================================================
@@ -1464,7 +1441,6 @@ const ELEMENTS = [
 
   <div class="hero-content">
     <p class="hero-pre show-en">Digital Legacy Archive</p>
-    <p class="hero-pre show-ar" style="font-family:var(--font-arabic);font-size:0.75rem;letter-spacing:0.04em">الأرشيف الرقمي للإرث العلمي</p>
 
     <div class="portrait-wrap">
       <span class="corner tl" aria-hidden="true"></span>
@@ -1475,16 +1451,13 @@ const ELEMENTS = [
     </div>
 
     <div class="hero-name show-en">Prof. Ahmed Medhat<br>Shams El Din</div>
-    <div class="hero-name-ar show-ar">الأستاذ الدكتور أحمد مدحت شمس الدين</div>
 
     <div class="hero-dates">1931 &nbsp;—&nbsp; 2008</div>
     <div class="hero-rule" aria-hidden="true"></div>
     <div class="hero-subtitle show-en">Chemist &nbsp;·&nbsp; Corrosion Scientist &nbsp;·&nbsp; Professor, Cairo University</div>
-    <div class="hero-subtitle show-ar" style="font-family:var(--font-arabic);font-size:0.85rem;color:var(--green-light)">كيميائي · عالم في تآكل الفلزات · أستاذ بجامعة القاهرة</div>
 
     <blockquote class="hero-quote">
-      <span class="show-en">"Every man dies, but not every man lives."<cite>— William Wallace</cite></span>
-      <span class="show-ar" style="font-family:var(--font-arabic);font-size:0.9rem">"كل إنسان يموت، لكن ليس كل إنسان يحيا حقاً."<cite style="font-family:var(--font-display)">— ويليام والاس</cite></span>
+      <span class="show-en">"Every man dies, but not every man lives."<cite>— William Wallace</cite></span></span>
     </blockquote>
   </div>
 
@@ -1501,9 +1474,7 @@ const ELEMENTS = [
   <div class="container">
     <header class="sec-header">
       <span class="sec-label show-en">Life &amp; Character</span>
-      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">الحياة والشخصية</span>
       <h2 class="sec-title show-en" id="bio-heading">Biography</h2>
-      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">السيرة الذاتية</h2>
       <div class="sec-rule"></div>
     </header>
 
@@ -1518,20 +1489,15 @@ const ELEMENTS = [
           <p>His field — electrochemical corrosion science — governs the integrity of pipelines, desalination plants, bridges, ships, and the entire built infrastructure of modern civilisation. He dedicated his career to understanding, measuring, and combating the invisible forces that cause metals to decay. His research on the corrosion behaviour of copper alloys, stainless steels, titanium, and aluminium in Arabian Gulf seawater had direct impact on the design of desalination plants across the Gulf region.</p>
           <p>He passed away in Cairo in 2008, leaving behind a towering body of scientific work, a family whose lives he shaped by example, and the memory of a man who made the most of every moment he was given.</p>
         </div>
-        <div class="bio-text show-ar" style="font-family:var(--font-arabic);direction:rtl">
-          <p>[TODO: النص العربي للسيرة الذاتية — يرجى إضافته]</p>
-        </div>
       </div>
 
       <div class="bio-sidebar">
         <div class="elements-panel">
           <p class="elements-panel-title show-en">Metals He Studied</p>
-          <p class="elements-panel-title show-ar" style="font-family:var(--font-arabic)">الفلزات التي درسها</p>
           <div class="elements-grid" id="elements-grid"></div>
         </div>
         <div class="curve-panel">
           <p class="curve-panel-title show-en">Tafel Plot — Polarisation Curve</p>
-          <p class="curve-panel-title show-ar" style="font-family:var(--font-arabic);font-size:0.65rem">منحنى الاستقطاب الكهروكيميائي</p>
           <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
                aria-label="Tafel polarization plot showing anodic and cathodic branches intersecting at the corrosion potential">
 
@@ -1600,7 +1566,6 @@ const ELEMENTS = [
 
           </svg>
           <p class="show-en">The polarisation curve — central tool of his science — plots a metal's electrochemical potential against current density, revealing its corrosion rate and mechanism.</p>
-          <p class="show-ar" style="font-family:var(--font-arabic);font-size:0.7rem">منحنى الاستقطاب — أداة علمه المحورية</p>
         </div>
       </div>
     </div>
@@ -1614,9 +1579,7 @@ const ELEMENTS = [
   <div class="container">
     <header class="sec-header">
       <span class="sec-label show-en">A Life in Science</span>
-      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">حياة في خدمة العلم</span>
       <h2 class="sec-title show-en" id="timeline-heading">Timeline</h2>
-      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">المسيرة</h2>
       <div class="sec-rule"></div>
     </header>
     <div class="timeline-list" id="timeline-list" role="list"></div>
@@ -1630,12 +1593,9 @@ const ELEMENTS = [
   <div class="container">
     <header class="sec-header">
       <span class="sec-label show-en">Peer-Reviewed Work</span>
-      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">الأعمال العلمية المحكّمة</span>
       <h2 class="sec-title show-en" id="pub-heading">Research &amp; Publications</h2>
-      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">الأبحاث والمنشورات</h2>
       <div class="sec-rule"></div>
       <p class="sec-sub show-en">Over a career spanning five decades, Prof. Shams El Din published hundreds of papers in leading international journals. A representative selection is listed below.</p>
-      <p class="sec-sub show-ar" style="font-family:var(--font-arabic);font-size:0.88rem">على مدى خمسة عقود نشر الأستاذ الدكتور شمس الدين مئات الأبحاث في أبرز المجلات العلمية الدولية.</p>
     </header>
 
     <div class="pub-profiles show-en">
@@ -1658,7 +1618,6 @@ const ELEMENTS = [
     </div>
 
     <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--green-deep);letter-spacing:0.05em;margin-bottom:1rem" class="show-en">Books — Arabic Language</h3>
-    <h3 style="font-family:var(--font-arabic);font-size:1rem;color:var(--green-deep);margin-bottom:1rem;direction:rtl" class="show-ar">الكتب باللغة العربية</h3>
     <div class="pub-pdfs" id="pub-pdfs"></div>
 
     <div class="pub-filters" id="pub-filters" role="group" aria-label="Filter by journal"></div>
@@ -1666,7 +1625,6 @@ const ELEMENTS = [
     <div class="pub-show-more">
       <button class="btn-outline" id="pub-more-btn">
         <span class="show-en">Show all publications</span>
-        <span class="show-ar" style="font-family:var(--font-arabic)">عرض جميع الأبحاث</span>
       </button>
     </div>
   </div>
@@ -1679,9 +1637,7 @@ const ELEMENTS = [
   <div class="container">
     <header class="sec-header">
       <span class="sec-label show-en">Recognition &amp; Honours</span>
-      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">التكريم والجوائز</span>
       <h2 class="sec-title show-en" id="awards-heading">Awards &amp; Degrees</h2>
-      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">الجوائز والدرجات العلمية</h2>
       <div class="sec-rule"></div>
     </header>
     <div class="awards-grid" id="awards-grid"></div>
@@ -1695,9 +1651,7 @@ const ELEMENTS = [
   <div class="container">
     <header class="sec-header">
       <span class="sec-label show-en">Physical Honours</span>
-      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">الأوسمة والنياشين</span>
       <h2 class="sec-title show-en" id="medals-heading">Medal Collection</h2>
-      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">مجموعة الأوسمة</h2>
       <div class="sec-rule"></div>
     </header>
     <div class="medals-grid" id="medals-grid"></div>
@@ -1711,12 +1665,9 @@ const ELEMENTS = [
   <div class="container">
     <header class="sec-header">
       <span class="sec-label show-en">Personal Collection</span>
-      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">المجموعة الشخصية</span>
       <h2 class="sec-title show-en" id="records-heading">Musical Records</h2>
-      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">الأسطوانات الموسيقية</h2>
       <div class="sec-rule"></div>
       <p class="sec-sub show-en">A selection of the vinyl records he loved — a window into the music that filled his home.</p>
-      <p class="sec-sub show-ar" style="font-family:var(--font-arabic)">أسطوانات موسيقية من مقتنياته — نافذة إلى الموسيقى التي كانت تملأ بيته.</p>
     </header>
     <!-- CRATE FLIP -->
     <div class="crate-outer">
@@ -1740,7 +1691,6 @@ const ELEMENTS = [
           </div>
           <div class="turntable-spindle"></div>
           <span class="turntable-idle-label show-en">Select a record<br>to play</span>
-          <span class="turntable-idle-label show-ar" style="font-family:var(--font-arabic);font-size:0.5rem">اختر أسطوانة للتشغيل</span>
         </div>
         <!-- Tonearm -->
         <div class="tonearm-container" id="tonearm">
@@ -1763,12 +1713,10 @@ const ELEMENTS = [
       <!-- Now Playing + Stop -->
       <div class="turntable-nowplaying" id="turntable-nowplaying">
         <span class="np-idle show-en">— Click a record to play —</span>
-        <span class="np-idle show-ar" style="font-family:var(--font-arabic)">— انقر على أسطوانة للتشغيل —</span>
       </div>
       <button class="tt-stop-btn" id="tt-stop-btn" aria-label="Stop and eject record" style="display:none">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
         <span class="show-en">Stop &amp; Eject</span>
-        <span class="show-ar" style="font-family:var(--font-arabic)">إيقاف وإخراج</span>
       </button>
     </div>
 
@@ -1782,9 +1730,7 @@ const ELEMENTS = [
   <div class="container">
     <header class="sec-header">
       <span class="sec-label show-en">A Life in Photographs</span>
-      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">حياة في صور</span>
       <h2 class="sec-title show-en" id="gallery-heading">Photo Gallery</h2>
-      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">معرض الصور</h2>
       <div class="sec-rule"></div>
     </header>
     <div class="gallery-grid" id="gallery-grid"></div>
@@ -1806,10 +1752,8 @@ const ELEMENTS = [
 ============================================================ -->
 <footer id="footer" role="contentinfo">
   <p class="footer-name show-en">Prof. Ahmed Medhat Shams El Din</p>
-  <p class="footer-name show-ar" style="font-family:var(--font-arabic)">الأستاذ الدكتور أحمد مدحت شمس الدين</p>
   <p class="footer-dates">Cairo, 1931 &nbsp;—&nbsp; 2008</p>
   <p class="footer-copy show-en">A family archive — built with care, to last for generations.</p>
-  <p class="footer-copy show-ar" style="font-family:var(--font-arabic)">أرشيف عائلي — أُنشئ بعناية، ليدوم للأجيال.</p>
 </footer>
 
 <!-- ============================================================
@@ -1817,18 +1761,6 @@ const ELEMENTS = [
 ============================================================ -->
 <script>
 /* ---- Language ---- */
-const root = document.getElementById('html-root');
-const body = document.body;
-let lang = 'en';
-document.getElementById('lang-toggle').addEventListener('click', () => {
-  lang = lang === 'en' ? 'ar' : 'en';
-  body.className = lang;
-  root.setAttribute('lang', lang);
-  root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-  document.querySelectorAll('.nav-links a[data-en]').forEach(a => {
-    a.textContent = lang === 'ar' ? a.dataset.ar : a.dataset.en;
-  });
-});
 
 /* ---- Nav scroll ---- */
 window.addEventListener('scroll', () => {
@@ -1863,7 +1795,6 @@ document.getElementById('timeline-list').innerHTML = TIMELINE.map(t => `
   <div class="tl-item" role="listitem">
     <span class="tl-year">${t.year}${t.note ? ' *' : ''}</span>
     <div class="tl-title show-en">${t.en}</div>
-    <div class="tl-title show-ar" style="font-family:var(--font-arabic)">${t.ar}</div>
     ${t.note ? `<div class="tl-note">[${t.note}]</div>` : ''}
   </div>
 `).join('');
@@ -1874,7 +1805,7 @@ document.getElementById('pub-pdfs').innerHTML = PDFS.map(p => `
   <a class="pdf-card" href="${encodeURIComponent(p.file)}" download aria-label="Download: ${p.title}">
     <span class="pdf-lang">Arabic · PDF Book</span>
     <span class="pdf-title">${p.title}</span>
-    <span class="pdf-dl">${dlIcon} <span class="show-en">Download</span><span class="show-ar" style="font-family:var(--font-arabic)">تحميل</span></span>
+    <span class="pdf-dl">${dlIcon} <span class="show-en">Download</span></span>
   </a>
 `).join('');
 
@@ -1904,7 +1835,6 @@ function renderPubs() {
         ${p.abstract ? `
           <button class="pub-abstract-toggle" onclick="toggleAbstract(this)" aria-expanded="false">
             <span class="show-en">Read abstract</span>
-            <span class="show-ar" style="font-family:var(--font-arabic)">اقرأ الملخص</span>
           </button>
           <div class="pub-abstract">${p.abstract}</div>
         ` : ''}
@@ -1943,7 +1873,6 @@ document.getElementById('awards-grid').innerHTML = AWARDS.map(a => `
   <div class="award-card">
     <div class="award-year">${a.year}</div>
     <div class="award-title show-en">${a.en}</div>
-    <span class="award-title-ar show-ar">${a.ar}</span>
   </div>
 `).join('');
 
@@ -2127,7 +2056,6 @@ function playRecord(index) {
   /* Update Now Playing */
   ttNowPlay.innerHTML = `
     <span class="np-label show-en">Now Playing</span>
-    <span class="np-label show-ar" style="font-family:var(--font-arabic)">يُشغَّل الآن</span>
     <span class="np-title">${rec.title}</span>
     <span class="np-artist">${rec.artist}</span>
   `;
@@ -2167,7 +2095,6 @@ function stopRecord() {
   /* Reset Now Playing label */
   ttNowPlay.innerHTML = `
     <span class="np-idle show-en">— Click a record to play —</span>
-    <span class="np-idle show-ar" style="font-family:var(--font-arabic)">— انقر على أسطوانة للتشغيل —</span>
   `;
 
   /* Hide stop button */
