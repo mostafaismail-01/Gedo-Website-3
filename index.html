@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prof. Ahmed Medhat Shams El Din — Digital Legacy Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ================================================================
+   TOKENS
+================================================================ */
+:root {
+  --parchment:      #f5edd8;
+  --parchment-mid:  #e8d9b5;
+  --parchment-dark: #d6c69a;
+  --ink:            #1c1208;
+  --ink-light:      #3a2e18;
+  --green-deep:     #182e22;
+  --green-mid:      #2a5238;
+  --green-light:    #4a7c59;
+  --green-pale:     #e6efe9;
+  --copper:         #aa6828;
+  --copper-light:   #d4956a;
+  --copper-pale:    #f0dcc0;
+  --gold:           #c4a035;
+  --gold-pale:      #f5e8b0;
+
+  --font-serif:   'EB Garamond', Georgia, serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-arabic:  'Noto Naskh Arabic', serif;
+
+  --max-w: 1120px;
+  --nav-h: 58px;
+}
+
+/* ================================================================
+   RESET & BASE
+================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 18px; }
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; }
+
+/* Language visibility */
+.show-ar { display: none !important; }
+body.ar .show-ar { display: revert !important; }
+body.ar .show-en { display: none !important; }
+body.ar { font-family: var(--font-arabic); direction: rtl; }
+
+/* ================================================================
+   NAV
+================================================================ */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: var(--green-deep);
+  border-bottom: 1px solid var(--copper);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 1.5rem; height: var(--nav-h);
+  transition: box-shadow 0.3s;
+}
+#navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.35); }
+
+.nav-brand {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 0.92rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  justify-self: start;
+}
+.nav-brand span {
+  color: var(--copper-light);
+  font-size: 0.68rem;
+  display: block;
+  letter-spacing: 0.1em;
+}
+
+.nav-links {
+  display: flex; gap: 0; list-style: none; align-items: center;
+}
+.nav-links a {
+  color: rgba(244,237,216,0.7);
+  font-family: var(--font-display);
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.42rem;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--gold); }
+
+.lang-btn {
+  background: none;
+  border: 1px solid rgba(170,104,40,0.5);
+  color: var(--copper-light);
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 2px;
+  transition: all 0.2s;
+  justify-self: end;
+}
+.lang-btn:hover { background: var(--copper); color: var(--parchment); border-color: var(--copper); }
+
+/* ================================================================
+   HERO
+================================================================ */
+#hero {
+  min-height: 100vh;
+  padding-top: var(--nav-h);
+  background: var(--green-deep);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* radial warm glow */
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 55% 65% at 50% 45%, rgba(196,160,53,0.10) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* lattice pattern */
+#hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(196,160,53,0.09) 1.5px, transparent 1.5px),
+    radial-gradient(circle, rgba(196,160,53,0.05) 1px, transparent 1px);
+  background-size: 80px 80px, 40px 40px;
+  background-position: 0 0, 20px 20px;
+  pointer-events: none;
+}
+
+/* Polarization curve — bottom left */
+.hero-curve {
+  position: absolute;
+  bottom: 6%; left: 0;
+  width: 200px;
+  opacity: 0.11;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  gap: 1.6rem;
+  padding: 3rem 1.5rem;
+}
+
+.hero-pre {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+}
+
+/* portrait with double-rule frame + corner ornaments */
+.portrait-wrap {
+  position: relative;
+  width: 210px; height: 270px;
+  flex-shrink: 0;
+}
+.portrait-wrap::before,
+.portrait-wrap::after {
+  content: '';
+  position: absolute;
+  border: 1px solid var(--copper);
+}
+.portrait-wrap::before { inset: -9px; opacity: 0.55; }
+.portrait-wrap::after  { inset: -18px; opacity: 0.22; }
+
+.portrait-wrap .corner {
+  position: absolute;
+  width: 16px; height: 16px;
+  border-color: var(--gold);
+  border-style: solid;
+  z-index: 1;
+}
+.portrait-wrap .corner.tl { top: -22px;    left: -22px;  border-width: 2px 0 0 2px; }
+.portrait-wrap .corner.tr { top: -22px;    right: -22px; border-width: 2px 2px 0 0; }
+.portrait-wrap .corner.bl { bottom: -22px; left: -22px;  border-width: 0 0 2px 2px; }
+.portrait-wrap .corner.br { bottom: -22px; right: -22px; border-width: 0 2px 2px 0; }
+
+.hero-portrait {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  filter: sepia(10%) contrast(1.05) brightness(0.98);
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 400;
+  color: var(--parchment);
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+}
+.hero-name-ar {
+  font-family: var(--font-arabic);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--gold);
+  font-weight: 500;
+}
+.hero-dates {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.22em;
+  color: var(--copper-light);
+}
+.hero-rule {
+  width: 100px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--copper), transparent);
+}
+.hero-subtitle {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-light);
+}
+.hero-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: rgba(244,237,216,0.6);
+  max-width: 380px;
+  line-height: 1.65;
+}
+.hero-quote cite {
+  display: block;
+  font-style: normal;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: rgba(244,237,216,0.35);
+  margin-top: 0.4rem;
+  text-transform: uppercase;
+}
+
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 1.8rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  z-index: 2; opacity: 0.4;
+  color: var(--copper-light);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.hero-scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(180deg, var(--copper), transparent);
+  animation: scrollBlink 2s ease-in-out infinite;
+}
+@keyframes scrollBlink { 0%,100% { opacity:.3 } 50% { opacity:1 } }
+
+/* ================================================================
+   SECTION SHARED
+================================================================ */
+section { padding: 5rem 2rem; }
+.container { max-width: var(--max-w); margin: 0 auto; }
+
+.sec-header { margin-bottom: 3rem; }
+.sec-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--copper);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.sec-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 400;
+  color: var(--green-deep);
+  line-height: 1.15;
+}
+.sec-rule {
+  width: 50px; height: 2px;
+  background: linear-gradient(90deg, var(--copper), var(--gold));
+  margin-top: 1rem;
+}
+.sec-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink-light);
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}
+
+/* ================================================================
+   BIOGRAPHY
+================================================================ */
+#biography { background: var(--parchment); }
+
+.bio-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 4rem;
+  align-items: start;
+}
+
+.bio-text { font-size: 1rem; }
+.bio-text p { margin-bottom: 1.3em; }
+.bio-text p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-size: 4.2rem;
+  float: left;
+  line-height: 0.75;
+  margin: 0.05em 0.1em 0 0;
+  color: var(--copper);
+  font-weight: 400;
+}
+
+.bio-sidebar { position: sticky; top: 80px; }
+
+.elements-panel {
+  background: var(--green-deep);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.elements-panel-title {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+  margin-bottom: 1rem;
+}
+.elements-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+.el-tile {
+  height: 48px;
+  border: 1px solid rgba(196,160,53,0.4);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  line-height: 1;
+  font-family: var(--font-display);
+  color: var(--gold);
+  opacity: 0.7;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+.el-tile:hover { opacity: 1; border-color: var(--gold); }
+.el-tile .en   { font-size: 0.42rem; margin-bottom: 1px; }
+.el-tile .sym  { font-size: 0.95rem; font-weight: 600; }
+.el-tile .name { font-size: 0.3rem; color: var(--copper-light); margin-top: 1px; }
+
+.curve-panel {
+  background: var(--green-deep);
+  padding: 1.5rem;
+}
+.curve-panel-title {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+  margin-bottom: 0.75rem;
+}
+.curve-panel p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.75rem;
+  color: rgba(244,237,216,0.45);
+  line-height: 1.55;
+  margin-top: 0.5rem;
+}
+
+/* ================================================================
+   TIMELINE
+================================================================ */
+#timeline { background: var(--green-deep); position: relative; overflow: hidden; }
+#timeline::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(196,160,53,0.07) 1.5px, transparent 1.5px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+#timeline .sec-title { color: var(--gold); }
+
+.timeline-list {
+  position: relative;
+  max-width: 750px;
+  margin: 0 auto;
+  padding-left: 2rem;
+}
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(180deg, transparent, var(--copper) 10%, var(--copper) 90%, transparent);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+  padding-left: 1.5rem;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -5px; top: 0.4rem;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--copper);
+  border: 2px solid var(--green-deep);
+  box-shadow: 0 0 0 1px var(--copper);
+}
+.tl-year {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--copper-light);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.tl-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--parchment);
+  line-height: 1.3;
+}
+.tl-note {
+  font-size: 0.85rem;
+  color: rgba(244,237,216,0.45);
+  margin-top: 0.3rem;
+  font-style: italic;
+  font-family: var(--font-display);
+}
+
+/* ================================================================
+   PUBLICATIONS
+================================================================ */
+#publications { background: var(--parchment-mid); }
+
+/* profile links */
+.pub-profiles {
+  display: flex; flex-wrap: wrap;
+  gap: 0.75rem; margin-bottom: 2.5rem;
+}
+.pub-profile-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.7rem; letter-spacing: 0.08em;
+  color: var(--green-mid);
+  border: 1px solid var(--parchment-dark);
+  padding: 0.4rem 0.85rem; border-radius: 2px;
+  transition: all 0.2s;
+}
+.pub-profile-link:hover { border-color: var(--green-mid); color: var(--green-deep); background: rgba(42,82,56,0.06); }
+
+/* PDF books */
+.pub-pdfs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 3.5rem;
+}
+.pdf-card {
+  background: var(--green-deep);
+  padding: 1.5rem;
+  display: flex; flex-direction: column;
+  gap: 0.75rem;
+  border-left: 3px solid var(--copper);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pdf-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.15); }
+.pdf-lang {
+  font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--copper-light); font-family: var(--font-display);
+}
+.pdf-title {
+  font-family: var(--font-arabic);
+  font-size: 0.95rem; color: var(--parchment);
+  line-height: 1.55; direction: rtl;
+}
+.pdf-dl {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); transition: color 0.2s; margin-top: auto;
+}
+.pdf-dl:hover { color: var(--copper-light); }
+
+/* filters */
+.pub-filters {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  margin-bottom: 2rem; justify-content: center;
+}
+.pub-filter-btn {
+  background: none;
+  border: 1px solid var(--parchment-dark);
+  color: var(--ink-light);
+  font-family: var(--font-display);
+  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.35rem 0.9rem; border-radius: 2px;
+  transition: all 0.2s;
+}
+.pub-filter-btn.active,
+.pub-filter-btn:hover { background: var(--green-deep); color: var(--gold); border-color: var(--green-deep); }
+
+/* pub list */
+.pub-list { display: flex; flex-direction: column; }
+.pub-item {
+  border-top: 1px solid var(--parchment-dark);
+  padding: 1.2rem 0;
+  display: grid; grid-template-columns: 60px 1fr;
+  gap: 1rem; align-items: start;
+}
+.pub-item:last-child { border-bottom: 1px solid var(--parchment-dark); }
+.pub-item:hover { background: rgba(170,104,40,0.04); padding-left: 0.5rem; padding-right: 0.5rem; margin-left: -0.5rem; margin-right: -0.5rem; }
+.pub-year {
+  font-family: var(--font-display);
+  font-size: 0.75rem; letter-spacing: 0.08em;
+  color: var(--copper); padding-top: 0.15rem; font-weight: 600;
+}
+.pub-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem; font-weight: 500; color: var(--ink);
+  line-height: 1.4; margin-bottom: 0.3rem;
+}
+.pub-journal {
+  font-family: var(--font-display);
+  font-style: italic; font-size: 0.78rem; color: var(--green-mid);
+}
+.pub-ext-links {
+  display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.3rem;
+}
+.pub-ext-link {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 0.62rem; letter-spacing: 0.08em;
+  color: var(--ink-light); transition: color 0.2s;
+}
+.pub-ext-link:hover { color: var(--green-mid); }
+.pub-abstract-toggle {
+  background: none; border: none;
+  font-family: var(--font-display);
+  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--copper); margin-top: 0.4rem; padding: 0;
+  transition: color 0.2s; display: block;
+}
+.pub-abstract-toggle:hover { color: var(--green-deep); }
+.pub-abstract {
+  font-size: 0.8rem; color: var(--ink-light);
+  line-height: 1.7; margin-top: 0.6rem; font-style: italic;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.pub-abstract.open { max-height: 300px; }
+
+.pub-show-more { text-align: center; margin-top: 2rem; }
+.btn-outline {
+  background: none; border: 1px solid var(--copper); color: var(--copper);
+  font-family: var(--font-display);
+  font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.65rem 2rem; border-radius: 2px; transition: all 0.2s;
+}
+.btn-outline:hover { background: var(--copper); color: var(--parchment); }
+
+/* ================================================================
+   AWARDS
+================================================================ */
+#awards { background: var(--parchment); }
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.award-card {
+  border: 1px solid var(--parchment-dark);
+  padding: 1.75rem; position: relative;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--parchment);
+}
+.award-card:hover { border-color: var(--copper); box-shadow: 0 4px 20px rgba(170,104,40,0.12); }
+.award-card::before {
+  content: ''; position: absolute; top: 8px; left: 8px;
+  width: 18px; height: 18px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); opacity: 0.5;
+}
+.award-card::after {
+  content: ''; position: absolute; bottom: 8px; right: 8px;
+  width: 18px; height: 18px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); opacity: 0.5;
+}
+.award-year {
+  font-family: var(--font-display);
+  font-size: 0.68rem; letter-spacing: 0.2em; color: var(--copper); margin-bottom: 0.5rem;
+}
+.award-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-weight: 500; color: var(--green-deep); line-height: 1.35;
+}
+.award-title-ar {
+  font-family: var(--font-arabic);
+  font-size: 0.88rem; color: var(--ink-light);
+  margin-top: 0.3rem; display: block; direction: rtl;
+}
+
+/* ================================================================
+   MEDALS
+================================================================ */
+#medals { background: var(--green-deep); position: relative; overflow: hidden; }
+#medals::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(196,160,53,0.06) 1.5px, transparent 1.5px);
+  background-size: 60px 60px; pointer-events: none;
+}
+#medals .sec-title { color: var(--gold); }
+#medals .sec-label { color: var(--copper-light); }
+
+.medals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+.medal-card {
+  position: relative; overflow: hidden;
+  background: var(--green-mid);
+  border: 1px solid rgba(196,160,53,0.2);
+  aspect-ratio: 3/4;
+  transition: border-color 0.25s, transform 0.25s;
+  cursor: pointer;
+}
+.medal-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.medal-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  filter: sepia(8%) contrast(1.05);
+}
+.medal-card:hover img { transform: scale(1.04); }
+.medal-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(24,46,34,0.85) 100%);
+  opacity: 0; transition: opacity 0.25s;
+  display: flex; align-items: flex-end; padding: 0.75rem;
+}
+.medal-card:hover .medal-overlay { opacity: 1; }
+.medal-num {
+  font-family: var(--font-display);
+  font-size: 0.6rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase;
+}
+
+/* ================================================================
+   MUSICAL RECORDS
+================================================================ */
+#records { background: var(--parchment-mid); }
+
+.records-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+.record-card {
+  position: relative; aspect-ratio: 1; border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  transition: transform 0.35s, box-shadow 0.35s;
+  cursor: pointer;
+}
+.record-card:hover { transform: scale(1.04) rotate(3deg); box-shadow: 0 14px 40px rgba(0,0,0,0.45); }
+.record-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.record-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  pointer-events: none; z-index: 1;
+}
+.record-card::after {
+  content: ''; position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 14px; height: 14px;
+  border-radius: 50%; background: var(--parchment-mid); z-index: 2;
+}
+.record-audio-hint {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(196,160,53,0.0);
+  border: 1px solid rgba(196,160,53,0.0);
+  z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+}
+.record-card:hover .record-audio-hint { background: rgba(24,46,34,0.75); border-color: var(--gold); }
+.record-audio-hint svg { width: 18px; height: 18px; color: var(--gold); opacity: 0; transition: opacity 0.3s; }
+.record-card:hover .record-audio-hint svg { opacity: 1; }
+
+.records-note {
+  text-align: center; margin-top: 2.5rem;
+  font-family: var(--font-display); font-style: italic;
+  font-size: 0.82rem; color: var(--ink-light); opacity: 0.6;
+}
+
+/* ================================================================
+   PHOTO GALLERY
+================================================================ */
+#gallery { background: var(--parchment); }
+.gallery-grid { columns: 3; column-gap: 0.75rem; }
+.gallery-item {
+  break-inside: avoid; margin-bottom: 0.75rem;
+  overflow: hidden; position: relative; cursor: pointer;
+  border: 1px solid transparent; transition: border-color 0.2s;
+}
+.gallery-item:hover { border-color: var(--copper); }
+.gallery-item img {
+  width: 100%; display: block;
+  filter: sepia(6%) contrast(1.02);
+  transition: transform 0.4s ease;
+}
+.gallery-item:hover img { transform: scale(1.03); }
+.gallery-overlay {
+  position: absolute; inset: 0;
+  background: rgba(24,46,34,0); transition: background 0.25s;
+  display: flex; align-items: center; justify-content: center;
+}
+.gallery-item:hover .gallery-overlay { background: rgba(24,46,34,0.25); }
+.gallery-overlay svg { opacity: 0; transition: opacity 0.25s; color: white; width: 28px; height: 28px; }
+.gallery-item:hover .gallery-overlay svg { opacity: 0.9; }
+
+/* Lightbox */
+#lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.92);
+  display: none; align-items: center; justify-content: center; padding: 2rem;
+}
+#lightbox.open { display: flex; }
+#lightbox img {
+  max-width: 90vw; max-height: 88vh; object-fit: contain;
+  box-shadow: 0 0 80px rgba(0,0,0,0.6);
+  border: 1px solid rgba(196,160,53,0.2);
+}
+#lightbox-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: none; border: none;
+  color: var(--parchment); font-size: 1.5rem; font-family: var(--font-display);
+  opacity: 0.7; transition: opacity 0.2s;
+}
+#lightbox-close:hover { opacity: 1; }
+#lightbox-prev, #lightbox-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(24,46,34,0.6); border: 1px solid rgba(196,160,53,0.3);
+  color: var(--gold); width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; font-family: var(--font-display); transition: background 0.2s;
+}
+#lightbox-prev:hover, #lightbox-next:hover { background: var(--green-mid); }
+#lightbox-prev { left: 1.5rem; }
+#lightbox-next { right: 1.5rem; }
+
+/* ================================================================
+   FOOTER
+================================================================ */
+#footer {
+  background: var(--green-deep);
+  border-top: 1px solid var(--copper);
+  padding: 3rem 2rem; text-align: center;
+}
+.footer-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 400;
+  color: var(--gold); letter-spacing: 0.04em; margin-bottom: 0.3rem;
+}
+.footer-dates {
+  font-family: var(--font-display);
+  font-size: 0.8rem; letter-spacing: 0.2em;
+  color: var(--copper-light); margin-bottom: 1.5rem;
+}
+.footer-copy {
+  font-size: 0.68rem; color: rgba(244,237,216,0.25); font-family: var(--font-display);
+}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+@media (max-width: 900px) {
+  .bio-grid { grid-template-columns: 1fr; }
+  .bio-sidebar { position: static; }
+  .gallery-grid { columns: 2; }
+}
+@media (max-width: 640px) {
+  html { font-size: 16px; }
+  section { padding: 3.5rem 1.25rem; }
+  .nav-links { display: none; }
+  .gallery-grid { columns: 2; }
+}
+
+/* ================================================================
+   FEATURE 1 — CRATE FLIP RECORD BROWSER
+================================================================ */
+.crate-outer {
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.crate-scene {
+  perspective: 900px;
+  perspective-origin: 50% 48%;
+  width: 100%;
+  height: 290px;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+}
+.crate-scene:active { cursor: grabbing; }
+
+.crate-track {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.crate-item {
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3);
+  will-change: transform, opacity;
+  cursor: pointer;
+}
+
+.crate-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  pointer-events: none;
+  /* groove ring illusion */
+  box-shadow: inset 0 0 0 18px rgba(0,0,0,0.12),
+              inset 0 0 0 38px rgba(0,0,0,0.07),
+              inset 0 0 0 60px rgba(0,0,0,0.04);
+}
+
+/* Centre hole */
+.crate-item::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--parchment-mid);
+  z-index: 2;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.25);
+  pointer-events: none;
+}
+
+/* Play button — only on front record */
+.crate-play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: rgba(24,46,34,0.80);
+  border: 1.5px solid var(--gold);
+  z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.22s;
+  pointer-events: none;
+}
+.crate-item.crate-front { pointer-events: auto; }
+.crate-item.crate-front:hover .crate-play-btn { opacity: 1; }
+.crate-play-btn svg { width: 18px; height: 18px; color: var(--gold); margin-left: 3px; }
+
+/* Nav row */
+.crate-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.crate-arrow {
+  background: none;
+  border: 1px solid var(--copper);
+  color: var(--copper);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  font-family: var(--font-display);
+}
+.crate-arrow:hover:not(:disabled) { background: var(--copper); color: var(--parchment); }
+.crate-arrow:disabled { opacity: 0.28; cursor: default; }
+
+.crate-counter {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-light);
+  min-width: 48px;
+  text-align: center;
+}
+
+/* ================================================================
+   FEATURE 2 — TURNTABLE
+================================================================ */
+.turntable-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+
+/* Wooden base */
+.turntable-base {
+  position: relative;
+  width: 480px;
+  max-width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.28),
+              0 2px 8px rgba(0,0,0,0.18),
+              inset 0 1px 0 rgba(255,255,255,0.08);
+  /* Wood grain layers */
+  background:
+    repeating-linear-gradient(87deg,
+      rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px,
+      transparent 1px, transparent 6px),
+    repeating-linear-gradient(2deg,
+      rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px,
+      transparent 1px, transparent 9px),
+    linear-gradient(90deg,
+      #4a2c0a 0%, #6b411a 10%, #5a3410 22%,
+      #7c4d20 33%, #4f2f0c 46%, #6b411a 58%,
+      #5a3410 70%, #7c4d20 83%, #4a2c0a 100%);
+}
+
+/* Platter */
+.turntable-platter {
+  position: absolute;
+  width: 172px; height: 172px;
+  border-radius: 50%;
+  top: 50%; left: 105px;
+  transform: translateY(-50%);
+  background: #111;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.7),
+              inset 0 0 0 5px rgba(255,255,255,0.03);
+  overflow: visible;
+}
+
+/* Felt mat inside platter */
+.turntable-platter::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 40% 35%, rgba(255,255,255,0.04) 0%, transparent 50%),
+    #1c1c1c;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.03),
+              inset 0 0 12px rgba(0,0,0,0.4);
+}
+
+/* Spinning vinyl image */
+.turntable-vinyl {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 1;
+}
+.turntable-vinyl.spinning {
+  animation: vinylSpin 1.82s linear infinite;
+}
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.turntable-vinyl img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.turntable-vinyl.has-record img { opacity: 1; }
+
+/* Centre spindle */
+.turntable-spindle {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #999;
+  z-index: 4;
+  box-shadow: 0 0 0 2px #555;
+}
+
+/* Idle label on platter */
+.turntable-idle-label {
+  position: absolute;
+  z-index: 2;
+  color: rgba(255,255,255,0.22);
+  font-family: var(--font-display);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.7;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.turntable-platter.has-record .turntable-idle-label { opacity: 0; }
+
+/* Tonearm */
+.tonearm-container {
+  position: absolute;
+  right: 28px; top: 12px;
+  width: 90px; height: 170px;
+  transform-origin: 14px 22px;      /* pivot on the disc */
+  transform: rotate(30deg);          /* resting: off the record */
+  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+}
+.tonearm-container.playing {
+  transform: rotate(-3deg);           /* playing: stylus over record */
+}
+
+/* Now Playing info */
+.turntable-nowplaying {
+  text-align: center;
+  min-height: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+.np-label {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+}
+.np-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ink);
+}
+.np-artist {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--ink-light);
+}
+.np-idle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--ink-light);
+  opacity: 0.45;
+}
+
+/* ================================================================
+   FEATURE 3 — METAL FLIP CARDS (bio sidebar)
+================================================================ */
+
+/* Override the existing 5-col grid → 2-col for readable flip backs */
+.elements-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 5px !important;
+}
+
+.el-flip-card {
+  height: 80px;
+  cursor: pointer;
+  perspective: 500px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.el-flip-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.el-flip-inner {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.el-flip-card.flipped .el-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.el-flip-front,
+.el-flip-back {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  border: 1px solid rgba(196,160,53,0.38);
+  background: var(--green-deep);
+  color: var(--gold);
+  padding: 5px 4px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.el-flip-back {
+  transform: rotateY(180deg);
+  background: var(--green-mid);
+  gap: 3px;
+  padding: 6px 6px;
+  justify-content: space-evenly;
+}
+
+/* Front face */
+.ef-num  { font-size: 0.45rem; color: var(--copper-light); font-family: var(--font-display); }
+.ef-sym  { font-size: 1.05rem; font-weight: 600; font-family: var(--font-display); line-height: 1; }
+.ef-name { font-size: 0.32rem; letter-spacing: 0.07em; color: var(--copper-light); font-family: var(--font-display); text-transform: uppercase; }
+
+/* Back face */
+.ef-sym-b    { font-size: 0.7rem; font-weight: 700; font-family: var(--font-display); color: var(--gold); }
+.ef-use      { font-size: 0.42rem; color: rgba(244,237,216,0.82); font-family: var(--font-display); line-height: 1.4; }
+.ef-research { font-size: 0.38rem; color: var(--copper-light); font-family: var(--font-display); font-style: italic; line-height: 1.4; }
+
+/* Tap hint on front (mobile) */
+.ef-hint {
+  font-size: 0.28rem;
+  color: rgba(196,160,53,0.35);
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* Stop/Eject button */
+.tt-stop-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid var(--copper);
+  color: var(--copper);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.4rem 1.1rem;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  transition: all 0.2s;
+}
+.tt-stop-btn:hover { background: var(--copper); color: var(--parchment); }
+
+/* Vinyl deceleration */
+@keyframes vinylDecel {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+.turntable-vinyl.decelerating {
+  animation: vinylDecel 1.4s cubic-bezier(0.4, 0, 1, 0.6) forwards !important;
+}
+
+/* Mobile crate adjustments */
+@media (max-width: 640px) {
+  .crate-scene  { height: 240px; }
+  .crate-item   { width: 170px; height: 170px; }
+  .turntable-base { height: 170px; }
+  .turntable-platter { width: 140px; height: 140px; left: 80px; }
+}
+
+</style>
+</head>
+<body class="en">
+
+<!-- ============================================================
+     CONTENT DATA — edit these to add/update content
+============================================================ -->
+<script>
+const PHOTOS = [
+  { src: 'Photo 01.jpg' },
+  { src: 'Photo 02.jpg' },
+  { src: 'Photo 03.jpg' },
+  { src: 'Photo 04.jpg' },
+  { src: 'Photo 05.jpg' },
+  { src: 'Photo 06.jpg' },
+  { src: 'photo 07.jpg' },
+  { src: 'photo 08.jpg' },
+  { src: 'photo 09.jpg' },
+  { src: 'photo 10.jpg' },
+  { src: 'photo 11.jpg' },
+  { src: 'photo 13.jpg' },
+  { src: 'photo 14.jpg' },
+];
+
+const MEDALS = [
+  { src: 'medal 01.jpg' },
+  { src: 'medal 02.jpg' },
+  { src: 'medal 03.jpg' },
+  { src: 'medal 04.jpg' },
+  { src: 'medal 05.jpg' },
+  { src: 'medal 06.jpg' },
+  { src: 'medal 07.jpg' },
+  { src: 'medal 08.jpg' },
+  { src: 'medal 09.jpg' },
+  { src: 'medal 10.jpg' },
+  { src: 'medal 11.jpg' },
+  { src: 'medal 12.jpg' },
+  { src: 'medal 13.jpg' },
+];
+
+/* ---- RECORDS — add title/artist when known ---- */
+const RECORDS = [
+  { src: 'record 01.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+  { src: 'record 02.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+  { src: 'record 03.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+  { src: 'record 04.jpg', title: 'The String Quartets', artist: 'Beethoven — Hungarian String Quartet' },
+  { src: 'record 05.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+  { src: 'record 06.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+  { src: 'record 07.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+  { src: 'record 08.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+];
+
+const TIMELINE = [
+  { year: '1931',   en: 'Born in Cairo, Egypt', ar: 'وُلد في القاهرة، مصر' },
+  { year: '~1941',  en: 'His father, a distinguished educator who shaped Egypt\'s science curriculum, passes away. His mother raises the family with exceptional resolve.', ar: 'وفاة والده التربوي الكبير — تربّت الأسرة على يدي أمه بعزم استثنائي.', note: 'TODO: confirm exact year' },
+  { year: '~1950s', en: 'Enrolled at the Faculty of Science, Cairo University — consistently top of his class in chemistry.', ar: 'الالتحاق بكلية العلوم بجامعة القاهرة — الأول على دفعته في الكيمياء.', note: 'TODO: confirm exact year' },
+  { year: '~1950s', en: 'Appointed Teaching Assistant, Faculty of Science, Cairo University; begins doctoral research.', ar: 'تعيينه معيداً بكلية العلوم — يبدأ رحلة البحث العلمي.', note: 'TODO: confirm exact year' },
+  { year: '~1950s', en: 'Meets his future wife during his first year of teaching.', ar: 'يلتقي برفيقة دربه خلال سنته الأولى في التدريس.', note: 'TODO: confirm exact year' },
+  { year: '1956',   en: 'Ph.D., Cairo University', ar: 'دكتوراه الفلسفة — جامعة القاهرة' },
+  { year: '1960',   en: 'Dr. Sc. Techn., Zurich Federal Institute of Technology (ETH Zürich), Switzerland', ar: 'دكتوراه العلوم التطبيقية — المعهد الفيدرالي السويسري (ETH زيوريخ)' },
+  { year: '1964',   en: 'D.Sc., Cairo University · State Incentive Award', ar: 'دكتوراه العلوم — جامعة القاهرة · جائزة الدولة التشجيعية' },
+  { year: '1979',   en: 'D.Sc., Ain Shams University', ar: 'دكتوراه العلوم — جامعة عين شمس' },
+  { year: '1983',   en: 'National Research Center Award for Scientific Excellence', ar: 'جائزة المركز القومي للبحوث عن التفوق العلمي' },
+  { year: '1993',   en: 'State Appreciation Award in Science', ar: 'جائزة الدولة التقديرية في العلوم' },
+  { year: '2002',   en: 'Honorary D.Sc. — Canada', ar: 'دكتوراه فخرية — كندا', note: 'TODO: confirm university name' },
+  { year: '2004',   en: 'Mubarak Prize for Science · Nile Award', ar: 'جائزة مبارك للعلوم · وسام النيل', note: 'TODO: confirm Nile Award details' },
+  { year: '2008',   en: 'Passes away in Cairo — leaving behind a towering body of scientific work and three daughters.', ar: 'انتقل إلى رحمة الله في القاهرة — خلّف إرثاً علمياً شامخاً وثلاث بنات.' },
+];
+
+const AWARDS = [
+  { year: '1956', en: 'Ph.D., Cairo University', ar: 'دكتوراه الفلسفة — جامعة القاهرة' },
+  { year: '1960', en: 'Dr. Sc. Techn., ETH Zürich', ar: 'دكتوراه العلوم التطبيقية — ETH زيوريخ' },
+  { year: '1964', en: 'D.Sc., Cairo University', ar: 'دكتوراه العلوم — جامعة القاهرة' },
+  { year: '1964', en: 'State Incentive Award', ar: 'جائزة الدولة التشجيعية' },
+  { year: '1979', en: 'D.Sc., Ain Shams University', ar: 'دكتوراه العلوم — جامعة عين شمس' },
+  { year: '1983', en: 'National Research Center Award for Scientific Excellence', ar: 'جائزة المركز القومي للبحوث عن التفوق العلمي' },
+  { year: '1993', en: 'State Appreciation Award in Science', ar: 'جائزة الدولة التقديرية في العلوم' },
+  { year: '2002', en: 'Honorary D.Sc. — Canada [TODO: confirm university]', ar: 'دكتوراه فخرية — كندا [TODO: اسم الجامعة]' },
+  { year: '2004', en: 'Mubarak Prize for Science', ar: 'جائزة مبارك للعلوم' },
+  { year: '2004', en: 'Nile Award [TODO: confirm details]', ar: 'وسام النيل [TODO: تأكيد التفاصيل]' },
+];
+
+const PUBLICATIONS = [
+  { year: 2009, title: 'Three strategies for combating the corrosion of steel pipes carrying desalinated potable water', journal: 'Desalination', abstract: 'The corrosion of metal pipes carrying potable water is a universal problem. The rate of metal attack depends on a number of factors, the most important of which is the nature of water. Desalinated water is known to be very aggressive, and its aggressivity exceeds that measured in naturally occurring river-, spring- or lake waters.' },
+  { year: 2005, title: 'Scale formation in flash chambers of high-temperature MSF distillers', journal: 'Desalination', abstract: 'The general overhaul of a high-temperature (112°C) MSF distiller provided the opportunity for the collection and examination of scales formed on the bottom of the first nine flash chambers.' },
+  { year: 2005, title: 'Carbon-induced corrosion of MSF condenser tubes in Arabian Gulf water', journal: 'Desalination', abstract: 'This investigation was undertaken to shed light on the failure of some 90/10 CuNi condenser tubes in a MSF distiller. Particles of carbon were discovered inside the tubes and were suspected of initiating micro-galvanic cells leading to pitting.' },
+  { year: 2003, title: 'Bio-film formation on stainless steels — Part 2: The role of seasonal changes, seawater composition and surface roughness', journal: 'Desalination', abstract: 'Bio-film formation on type 254 SMO stainless steel in Arabian Gulf water was followed by measuring the variation of the open circuit potentials of test coupons under a variety of conditions.' },
+  { year: 2002, title: 'Inhibition of the thermal decomposition of HCO₃⁻: A novel approach to the problem of alkaline scale formation in seawater desalination plants', journal: 'Desalination', abstract: 'Alkaline scale formation in seawater desalination plants is triggered by the thermal decomposition of the bicarbonate ion. A kinetically controlled, first-order approach to retarding scaling in evaporation units is presented.' },
+  { year: 2002, title: 'Galvanic corrosion in the systems titanium/316 L stainless steel/Al brass in Arabian Gulf water', journal: 'Desalination', abstract: 'This study aims to further the understanding of galvanic corrosion behaviour in systems commonly encountered in MSF distillers, by measuring open circuit potentials at temperatures between 25°C and 65°C.' },
+  { year: 2001, title: 'A new form of titanium condenser tube droplet erosion', journal: 'Desalination', abstract: 'A description is given of a new form of droplet erosion of titanium condenser tubes, in which the tube wall thickness is reduced to zero at sites of maximum impact by wet steam.' },
+  { year: 1999, title: 'Corrosion of 70–30 Cu–Ni condenser tubes in MSF distillers: an electrochemical study', journal: 'Desalination', abstract: 'The corrosion of 70–30 Cu–Ni condenser tubes in the vapour of multistage flash evaporation distillers occurs within a thin water film adhering to the metal surface.' },
+  { year: 1998, title: 'Kinetics of hydrolysis of chloroform and bromoform in aqueous solutions', journal: 'Desalination', abstract: 'The base-catalyzed hydrolysis of chloroform and bromoform was examined in water–methanol solutions.' },
+  { year: 1998, title: 'Kinetics of the reaction between hydrogen peroxide and hypochlorite', journal: 'Desalination', abstract: 'In desalination, brackish water or seawater is chlorinated to prevent biofouling. This paper examines the kinetics of dechlorination prior to discharge.' },
+  { year: 1998, title: 'Contribution to the problem of vapour-side corrosion of copper-nickel tubes in MSF distillers', journal: 'Desalination', abstract: 'Describes the vapour-side corrosion of 70 Cu30Ni condenser tubes in MSF distillers.' },
+  { year: 1998, title: 'Operation processes affecting corrosion in MSF distillers', journal: 'Desalination', abstract: 'Multi-stage flash distillation of seawater is an established technique in coastal arid countries. This paper reviews how standard operational processes affect corrosion rates.' },
+  { year: 1998, title: 'Thermometric, gravimetric, and potentiometric study of corrosion of iron under conditions of reaction Fe + 2Fe³⁺ = 3Fe²⁺', journal: 'Electrochimica Acta', abstract: 'The corrosion of iron in slightly acid solutions under conditions of the oxidation-reduction equilibrium was studied by the Mylius thermometric technique.' },
+  { year: 1997, title: 'Corrosion inhibition by molybdate/polymaliate mixtures', journal: 'Desalination', abstract: 'The inhibition of the corrosion of mild steel in continuously aerated potable water by the addition of sodium molybdate was examined by electrochemical techniques.' },
+  { year: 1997, title: 'Galvanic corrosion of copper-base alloys in contact with molybdenum-containing stainless steels in Arabian Gulf water', journal: 'Desalination', abstract: 'This paper examines galvanic interaction and pitting susceptibility of MSF condenser tube materials under service conditions.' },
+  { year: 1996, title: 'Titanium hydride formation from Arabian Gulf water', journal: 'Desalination', abstract: 'This paper reports the unexpected formation of titanium hydride in MSF condenser tubes under certain operating conditions.' },
+  { year: 1996, title: 'Biofilm formation on stainless steels in Arabian Gulf water', journal: 'Desalination', abstract: 'Biofilms cause ennobling of free corrosion potentials and increase susceptibility to pitting and crevice corrosion.' },
+  { year: 1986, title: 'Comparative study of the galvanic corrosion of stainless steel–Al and Cu–Al systems in aqueous solutions', journal: 'Journal of Electroanalytical Chemistry', abstract: 'Potential scanning on surface systems in aerated NaCl solution was registered for anodes of various areas.' },
+  { year: 1985, title: 'Electrochemical and ESCA study on the tarnishing of silver in solutions of different pS and pH values', journal: 'Journal of Electroanalytical Chemistry', abstract: 'Ag₂S forms on silver electrodes in sulfide solutions via a chemical, continuous one-electron process.' },
+  { year: 1985, title: 'A thermometric study of the kinetics of acid dissolution of four copper alloys used in desalination plants', journal: 'Desalination', abstract: 'The dissolution of four copper alloys in HNO₃ solutions is studied by the thermometric technique.' },
+  { year: 1983, title: 'Effect of cold work on anodic polarization of low carbon steel', journal: 'Corrosion Science', abstract: 'Annealing at 750°C for 2 h restores grain dimensions and reduces corrosion rate of cold-worked low carbon steel.' },
+  { year: 1981, title: 'Galvanic Corrosion in the Copper/Zinc System: II. Effect of NH₄⁺-ion', journal: 'Journal of Electroanalytical Chemistry', abstract: '' },
+  { year: 1981, title: 'Oxide Species in Molten Salts', journal: 'Journal of Electroanalytical Chemistry', abstract: 'A review of oxide species identification in molten salt systems, with a generalised thermodynamic approach.' },
+];
+
+const PDFS = [
+  { title: 'تآكل الفلزات وأهميته للمهندس — الجزء الأول', file: 'تآكل الفلزات وأهميته للمهندس 1.pdf' },
+  { title: 'تآكل الفلزات وأهميته للمهندس — الجزء الثاني', file: 'تآكل الفلزات وأهميته للمهندس 2.pdf' },
+  { title: 'تآكل الفلزات وأهميته للمهندس — الجزء الثالث', file: 'تآكل الفلزات وأهميته للمهندس الجزء الثــالث.pdf' },
+  { title: 'ثلاث استراتيجيات لمكافحة تآكل أنابيب الصلب', file: 'ثلاث استراتيجيات لمكافة تآكل أنابيب الصلب.pdf' },
+];
+
+const ELEMENTS = [
+  { num: 29, sym: 'Cu', name: 'Copper',     use: 'Condenser tubes & Cu-Ni alloys in MSF desalination plants', research: 'Corrosion & galvanic behaviour in Arabian Gulf seawater' },
+  { num: 30, sym: 'Zn', name: 'Zinc',       use: 'Brass alloys, sacrificial anodes, galvanic couples',          research: 'Galvanic Cu/Zn corrosion & effect of NH₄⁺ ion' },
+  { num: 22, sym: 'Ti', name: 'Titanium',   use: 'MSF distiller condenser tubes & offshore equipment',          research: 'New form of droplet erosion; unexpected hydride formation' },
+  { num: 26, sym: 'Fe', name: 'Iron',        use: 'Steel pipes & structural components in water systems',        research: 'Corrosion kinetics & anodic polarisation of carbon steel' },
+  { num: 28, sym: 'Ni', name: 'Nickel',     use: '70/30 & 90/10 Cu-Ni alloy tubing in MSF distillers',         research: 'Vapour-side & water-side corrosion of Cu-Ni condenser tubes' },
+  { num: 42, sym: 'Mo', name: 'Molybdenum', use: 'Stainless steel alloying; corrosion inhibitor additive',      research: 'Molybdate/polymaliate mixtures as corrosion inhibitors' },
+  { num: 50, sym: 'Sn', name: 'Tin',        use: 'Al-brass alloys & bronze components in marine systems',       research: 'Galvanic corrosion of tin-bearing alloys in seawater' },
+  { num: 13, sym: 'Al', name: 'Aluminium',  use: 'Al-brass condenser tubes & structural alloys',               research: 'Galvanic corrosion in Al-brass / stainless steel systems' },
+  { num: 47, sym: 'Ag', name: 'Silver',     use: 'Electrochemical reference electrodes & sensors',             research: 'Tarnishing of silver at varying pS and pH values (ESCA)' },
+  { num: 82, sym: 'Pb', name: 'Lead',       use: 'Traditional alloys & molten salt systems',                   research: 'Oxide species & lead behaviour in molten salt chemistry' },
+];
+</script>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-brand">
+    A.M. Shams El Din
+    <span class="show-en">1931 – 2008</span>
+    <span class="show-ar">١٩٣١ – ٢٠٠٨</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="#biography"    data-en="Biography"  data-ar="السيرة الذاتية">Biography</a></li>
+    <li><a href="#timeline"     data-en="Timeline"   data-ar="المسيرة">Timeline</a></li>
+    <li><a href="#publications" data-en="Research"   data-ar="الأبحاث">Research</a></li>
+    <li><a href="#awards"       data-en="Awards"     data-ar="الجوائز">Awards</a></li>
+    <li><a href="#medals"       data-en="Medals"     data-ar="الأوسمة">Medals</a></li>
+    <li><a href="#records"      data-en="Records"    data-ar="الأسطوانات">Records</a></li>
+    <li><a href="#gallery"      data-en="Gallery"    data-ar="الصور">Gallery</a></li>
+  </ul>
+  <button class="lang-btn" id="lang-toggle" aria-label="Switch language">
+    <span class="show-en">العربية</span>
+    <span class="show-ar">English</span>
+  </button>
+</nav>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero" aria-label="Introduction">
+
+  <svg class="hero-curve" aria-hidden="true" viewBox="0 0 220 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="30" y1="10" x2="30" y2="160" stroke="#c4a035" stroke-width="1"/>
+    <line x1="30" y1="160" x2="210" y2="160" stroke="#c4a035" stroke-width="1"/>
+    <text x="14" y="88" font-size="9" fill="#c4a035" transform="rotate(-90 20 90)" font-family="Georgia">E (V)</text>
+    <text x="105" y="175" font-size="9" fill="#c4a035" font-family="Georgia" text-anchor="middle">log i (A/cm²)</text>
+    <path d="M 30 130 Q 80 100 130 55 Q 160 30 190 15" stroke="#b87333" stroke-width="1.5"/>
+    <path d="M 30 40 Q 70 70 110 110 Q 150 140 190 155" stroke="#4a7c59" stroke-width="1.5"/>
+    <circle cx="105" cy="85" r="3" fill="none" stroke="#c4a035" stroke-width="1"/>
+    <line x1="105" y1="85" x2="30" y2="85" stroke="#c4a035" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <line x1="105" y1="85" x2="105" y2="160" stroke="#c4a035" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <text x="33" y="83" font-size="7" fill="#c4a035" font-family="Georgia">Ecorr</text>
+    <text x="108" y="158" font-size="7" fill="#c4a035" font-family="Georgia">icorr</text>
+    <text x="175" y="22" font-size="8" fill="#b87333" font-family="Georgia" font-style="italic">anodic</text>
+    <text x="155" y="152" font-size="8" fill="#4a7c59" font-family="Georgia" font-style="italic">cathodic</text>
+  </svg>
+
+  <div class="hero-content">
+    <p class="hero-pre show-en">Digital Legacy Archive</p>
+    <p class="hero-pre show-ar" style="font-family:var(--font-arabic);font-size:0.75rem;letter-spacing:0.04em">الأرشيف الرقمي للإرث العلمي</p>
+
+    <div class="portrait-wrap">
+      <span class="corner tl" aria-hidden="true"></span>
+      <span class="corner tr" aria-hidden="true"></span>
+      <span class="corner bl" aria-hidden="true"></span>
+      <span class="corner br" aria-hidden="true"></span>
+      <img src="Photo 02.jpg" alt="Professor Ahmed Medhat Shams El Din" class="hero-portrait">
+    </div>
+
+    <div class="hero-name show-en">Prof. Ahmed Medhat<br>Shams El Din</div>
+    <div class="hero-name-ar show-ar">الأستاذ الدكتور أحمد مدحت شمس الدين</div>
+
+    <div class="hero-dates">1931 &nbsp;—&nbsp; 2008</div>
+    <div class="hero-rule" aria-hidden="true"></div>
+    <div class="hero-subtitle show-en">Chemist &nbsp;·&nbsp; Corrosion Scientist &nbsp;·&nbsp; Professor, Cairo University</div>
+    <div class="hero-subtitle show-ar" style="font-family:var(--font-arabic);font-size:0.85rem;color:var(--green-light)">كيميائي · عالم في تآكل الفلزات · أستاذ بجامعة القاهرة</div>
+
+    <blockquote class="hero-quote">
+      <span class="show-en">"Every man dies, but not every man lives."<cite>— William Wallace</cite></span>
+      <span class="show-ar" style="font-family:var(--font-arabic);font-size:0.9rem">"كل إنسان يموت، لكن ليس كل إنسان يحيا حقاً."<cite style="font-family:var(--font-display)">— ويليام والاس</cite></span>
+    </blockquote>
+  </div>
+
+  <div class="hero-scroll-cue" aria-hidden="true">
+    <span class="show-en">Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BIOGRAPHY
+============================================================ -->
+<section id="biography" aria-labelledby="bio-heading">
+  <div class="container">
+    <header class="sec-header">
+      <span class="sec-label show-en">Life &amp; Character</span>
+      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">الحياة والشخصية</span>
+      <h2 class="sec-title show-en" id="bio-heading">Biography</h2>
+      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">السيرة الذاتية</h2>
+      <div class="sec-rule"></div>
+    </header>
+
+    <div class="bio-grid">
+      <div>
+        <div class="bio-text show-en">
+          <p>Prof. Dr. Ahmed Medhat Shams El Din was born in Cairo in 1931. He was the youngest of six siblings — four brothers and two sisters. His father was a distinguished educational figure who wrote and developed the high-school science curriculum in the early years of the twentieth century. Sadly, his father passed away when Shams El Din was just ten years old. Yet he was outlived by a remarkable wife who, coming from the Egyptian upper middle class, put all her effort, wealth, and wisdom into raising successful and independent children.</p>
+          <p>While Shams El Din grew up to become one of the foremost corrosion scientists of his generation, his brothers were equally accomplished in different fields: one a celebrated architect, one a pioneering computer engineer, and one a successful industrialist. [TODO: verify sibling details]</p>
+          <p>He completed his school years with distinction and was admitted to the Faculty of Science at Cairo University — at a time when Science, Engineering, Medicine, and Pharmacy were the most prestigious faculties in Egypt. As a student he did not yet know the depth of his passion for chemistry, but it became unmistakable when he began attending lectures given by the most notable scientists of his time. He was consistently the top of his class.</p>
+          <p>After graduating with his Bachelor of Science, he was appointed Teaching Assistant at the Faculty of Science, Cairo University, where he began his doctoral research while teaching undergraduate students. During his first year of teaching, he met the woman who would become his lifelong companion, wife, and the mother of his three daughters.</p>
+          <p>He pursued his doctoral work with characteristic rigour, earning his Ph.D. from Cairo University in 1956, then crossing to Europe to earn a second doctorate — Dr. Sc. Techn. — from the prestigious Zurich Federal Institute of Technology (ETH Zürich) in 1960. A third doctorate followed from Cairo University in 1964. Over a career spanning more than five decades, he produced hundreds of research papers published in leading international journals, contributed Arabic-language technical articles to engineering publications across the Arab world, and authored books on metal corrosion that are still referenced today.</p>
+          <p>His field — electrochemical corrosion science — governs the integrity of pipelines, desalination plants, bridges, ships, and the entire built infrastructure of modern civilisation. He dedicated his career to understanding, measuring, and combating the invisible forces that cause metals to decay. His research on the corrosion behaviour of copper alloys, stainless steels, titanium, and aluminium in Arabian Gulf seawater had direct impact on the design of desalination plants across the Gulf region.</p>
+          <p>He passed away in Cairo in 2008, leaving behind a towering body of scientific work, a family whose lives he shaped by example, and the memory of a man who made the most of every moment he was given.</p>
+        </div>
+        <div class="bio-text show-ar" style="font-family:var(--font-arabic);direction:rtl">
+          <p>[TODO: النص العربي للسيرة الذاتية — يرجى إضافته]</p>
+        </div>
+      </div>
+
+      <div class="bio-sidebar">
+        <div class="elements-panel">
+          <p class="elements-panel-title show-en">Metals He Studied</p>
+          <p class="elements-panel-title show-ar" style="font-family:var(--font-arabic)">الفلزات التي درسها</p>
+          <div class="elements-grid" id="elements-grid"></div>
+        </div>
+        <div class="curve-panel">
+          <p class="curve-panel-title show-en">Tafel Plot — Polarisation Curve</p>
+          <p class="curve-panel-title show-ar" style="font-family:var(--font-arabic);font-size:0.65rem">منحنى الاستقطاب الكهروكيميائي</p>
+          <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
+               aria-label="Tafel polarization plot showing anodic and cathodic branches intersecting at the corrosion potential">
+
+            <!-- Faint grid (does not extend into label zone x > 215) -->
+            <line x1="55" y1="52" x2="215" y2="52" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+            <line x1="55" y1="98" x2="215" y2="98" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+            <line x1="55" y1="144" x2="215" y2="144" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+            <line x1="110" y1="10" x2="110" y2="176" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+            <line x1="165" y1="10" x2="165" y2="176" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+
+            <!-- Y-axis -->
+            <line x1="55" y1="176" x2="55" y2="8" stroke="#c4a035" stroke-width="0.9" opacity="0.5"/>
+            <!-- X-axis -->
+            <line x1="55" y1="176" x2="220" y2="176" stroke="#c4a035" stroke-width="0.9" opacity="0.5"/>
+
+            <!-- Axis arrows -->
+            <polygon points="55,5 52,13 58,13" fill="#c4a035" opacity="0.5"/>
+            <polygon points="223,176 215,173 215,179" fill="#c4a035" opacity="0.5"/>
+
+            <!-- Y-axis label: vertical, left of axis, clear of everything -->
+            <text transform="translate(17,105) rotate(-90)"
+                  font-size="10" fill="#c4a035" font-family="Georgia" font-style="italic"
+                  opacity="0.6" text-anchor="middle">E (V)</text>
+
+            <!-- X-axis label: below axis, horizontally centred on the plot -->
+            <text x="135" y="193"
+                  font-size="10" fill="#c4a035" font-family="Georgia" font-style="italic"
+                  opacity="0.6" text-anchor="middle">log i</text>
+
+            <!-- Ecorr tick on y-axis + small label to its left -->
+            <line x1="50" y1="98" x2="60" y2="98" stroke="#c4a035" stroke-width="1" opacity="0.5"/>
+            <text x="48" y="102" font-size="7.5" fill="#c4a035" font-family="Georgia"
+                  text-anchor="end" opacity="0.6"
+                  stroke="#182e22" stroke-width="3" paint-order="stroke fill">Ecorr</text>
+
+            <!-- icorr tick on x-axis + small label below it -->
+            <line x1="135" y1="171" x2="135" y2="181" stroke="#c4a035" stroke-width="1" opacity="0.5"/>
+            <text x="135" y="188" font-size="7.5" fill="#c4a035" font-family="Georgia"
+                  text-anchor="middle" opacity="0.6"
+                  stroke="#c4a035" stroke-width="0" paint-order="stroke fill">icorr</text>
+
+            <!-- Dashed crosshairs to corrosion point -->
+            <line x1="55" y1="98" x2="135" y2="98"
+                  stroke="#c4a035" stroke-width="0.6" stroke-dasharray="3 3" opacity="0.4"/>
+            <line x1="135" y1="98" x2="135" y2="176"
+                  stroke="#c4a035" stroke-width="0.6" stroke-dasharray="3 3" opacity="0.4"/>
+
+            <!-- Corrosion point -->
+            <circle cx="135" cy="98" r="4.5" fill="none" stroke="#c4a035" stroke-width="1.5" opacity="0.85"/>
+
+            <!-- ANODIC curve — ends at x=212, label zone starts x=218 -->
+            <path d="M 55 154 C 82 142, 115 118, 135 96 C 156 74, 192 50, 212 40"
+                  stroke="#b87333" stroke-width="2.2" stroke-linecap="round"/>
+
+            <!-- anodic label: to the right of curve end, at same height -->
+            <text x="218" y="46" font-size="10" fill="#b87333" font-family="Georgia" font-style="italic"
+                  stroke="#182e22" stroke-width="4" paint-order="stroke fill">anodic</text>
+
+            <!-- CATHODIC curve — ends at x=212 -->
+            <path d="M 55 44 C 82 60, 114 86, 135 100 C 157 116, 192 146, 212 158"
+                  stroke="#4a7c59" stroke-width="2.2" stroke-linecap="round"/>
+
+            <!-- cathodic label: to the right of curve end, at same height -->
+            <text x="218" y="164" font-size="10" fill="#4a7c59" font-family="Georgia" font-style="italic"
+                  stroke="#182e22" stroke-width="4" paint-order="stroke fill">cathodic</text>
+
+          </svg>
+          <p class="show-en">The polarisation curve — central tool of his science — plots a metal's electrochemical potential against current density, revealing its corrosion rate and mechanism.</p>
+          <p class="show-ar" style="font-family:var(--font-arabic);font-size:0.7rem">منحنى الاستقطاب — أداة علمه المحورية</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TIMELINE
+============================================================ -->
+<section id="timeline" aria-labelledby="timeline-heading">
+  <div class="container">
+    <header class="sec-header">
+      <span class="sec-label show-en">A Life in Science</span>
+      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">حياة في خدمة العلم</span>
+      <h2 class="sec-title show-en" id="timeline-heading">Timeline</h2>
+      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">المسيرة</h2>
+      <div class="sec-rule"></div>
+    </header>
+    <div class="timeline-list" id="timeline-list" role="list"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PUBLICATIONS
+============================================================ -->
+<section id="publications" aria-labelledby="pub-heading">
+  <div class="container">
+    <header class="sec-header">
+      <span class="sec-label show-en">Peer-Reviewed Work</span>
+      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">الأعمال العلمية المحكّمة</span>
+      <h2 class="sec-title show-en" id="pub-heading">Research &amp; Publications</h2>
+      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">الأبحاث والمنشورات</h2>
+      <div class="sec-rule"></div>
+      <p class="sec-sub show-en">Over a career spanning five decades, Prof. Shams El Din published hundreds of papers in leading international journals. A representative selection is listed below.</p>
+      <p class="sec-sub show-ar" style="font-family:var(--font-arabic);font-size:0.88rem">على مدى خمسة عقود نشر الأستاذ الدكتور شمس الدين مئات الأبحاث في أبرز المجلات العلمية الدولية.</p>
+    </header>
+
+    <div class="pub-profiles show-en">
+      <a class="pub-profile-link" href="https://www.researchgate.net/scientific-contributions/A-M-Shams-El-Din-83983365" target="_blank" rel="noopener">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        ResearchGate profile
+      </a>
+      <a class="pub-profile-link" href="https://typeset.io/authors/a-m-shams-el-din-1m7u9be0uo" target="_blank" rel="noopener">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        SciSpace profile
+      </a>
+      <a class="pub-profile-link" href="https://www.tandfonline.com/action/doSearch?AllField=a.m.+shams+el+din&SeriesKey=ycst19" target="_blank" rel="noopener">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        British Corrosion Journal
+      </a>
+      <a class="pub-profile-link" href="https://www.sciencedirect.com/search?qs=a.m.+shams+el+din&pub=Desalination" target="_blank" rel="noopener">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Desalination — ScienceDirect
+      </a>
+    </div>
+
+    <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--green-deep);letter-spacing:0.05em;margin-bottom:1rem" class="show-en">Books — Arabic Language</h3>
+    <h3 style="font-family:var(--font-arabic);font-size:1rem;color:var(--green-deep);margin-bottom:1rem;direction:rtl" class="show-ar">الكتب باللغة العربية</h3>
+    <div class="pub-pdfs" id="pub-pdfs"></div>
+
+    <div class="pub-filters" id="pub-filters" role="group" aria-label="Filter by journal"></div>
+    <div class="pub-list" id="pub-list" role="list"></div>
+    <div class="pub-show-more">
+      <button class="btn-outline" id="pub-more-btn">
+        <span class="show-en">Show all publications</span>
+        <span class="show-ar" style="font-family:var(--font-arabic)">عرض جميع الأبحاث</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     AWARDS
+============================================================ -->
+<section id="awards" aria-labelledby="awards-heading">
+  <div class="container">
+    <header class="sec-header">
+      <span class="sec-label show-en">Recognition &amp; Honours</span>
+      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">التكريم والجوائز</span>
+      <h2 class="sec-title show-en" id="awards-heading">Awards &amp; Degrees</h2>
+      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">الجوائز والدرجات العلمية</h2>
+      <div class="sec-rule"></div>
+    </header>
+    <div class="awards-grid" id="awards-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MEDALS
+============================================================ -->
+<section id="medals" aria-labelledby="medals-heading">
+  <div class="container">
+    <header class="sec-header">
+      <span class="sec-label show-en">Physical Honours</span>
+      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">الأوسمة والنياشين</span>
+      <h2 class="sec-title show-en" id="medals-heading">Medal Collection</h2>
+      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">مجموعة الأوسمة</h2>
+      <div class="sec-rule"></div>
+    </header>
+    <div class="medals-grid" id="medals-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MUSICAL RECORDS
+============================================================ -->
+<section id="records" aria-labelledby="records-heading">
+  <div class="container">
+    <header class="sec-header">
+      <span class="sec-label show-en">Personal Collection</span>
+      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">المجموعة الشخصية</span>
+      <h2 class="sec-title show-en" id="records-heading">Musical Records</h2>
+      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">الأسطوانات الموسيقية</h2>
+      <div class="sec-rule"></div>
+      <p class="sec-sub show-en">A selection of the vinyl records he loved — a window into the music that filled his home.</p>
+      <p class="sec-sub show-ar" style="font-family:var(--font-arabic)">أسطوانات موسيقية من مقتنياته — نافذة إلى الموسيقى التي كانت تملأ بيته.</p>
+    </header>
+    <!-- CRATE FLIP -->
+    <div class="crate-outer">
+      <div class="crate-scene" id="crate-scene">
+        <div class="crate-track" id="crate-track"></div>
+      </div>
+      <div class="crate-nav">
+        <button class="crate-arrow" id="crate-prev" aria-label="Previous record">&#8592;</button>
+        <span class="crate-counter" id="crate-counter">1 / 8</span>
+        <button class="crate-arrow" id="crate-next" aria-label="Next record">&#8594;</button>
+      </div>
+    </div>
+
+    <!-- TURNTABLE -->
+    <div class="turntable-section">
+      <div class="turntable-base" id="turntable-base">
+        <!-- Platter -->
+        <div class="turntable-platter" id="turntable-platter">
+          <div class="turntable-vinyl" id="turntable-vinyl">
+            <img id="turntable-img" src="" alt="">
+          </div>
+          <div class="turntable-spindle"></div>
+          <span class="turntable-idle-label show-en">Select a record<br>to play</span>
+          <span class="turntable-idle-label show-ar" style="font-family:var(--font-arabic);font-size:0.5rem">اختر أسطوانة للتشغيل</span>
+        </div>
+        <!-- Tonearm -->
+        <div class="tonearm-container" id="tonearm">
+          <svg viewBox="0 0 90 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Counterweight -->
+            <rect x="6" y="2" width="16" height="11" rx="3" fill="#3a3a3a" stroke="#555" stroke-width="0.8"/>
+            <!-- Pivot disc -->
+            <circle cx="14" cy="22" r="8" fill="#4a4040" stroke="#666" stroke-width="1"/>
+            <circle cx="14" cy="22" r="3.5" fill="#2a2a2a"/>
+            <!-- Main arm (tapered) -->
+            <path d="M14 22 Q 22 75 42 138" stroke="#808080" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+            <path d="M14 22 Q 22 75 42 138" stroke="#b0b0b0" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.3"/>
+            <!-- Headshell -->
+            <path d="M42 138 L28 162" stroke="#909090" stroke-width="4" stroke-linecap="round"/>
+            <!-- Stylus (amber dot) -->
+            <circle cx="27" cy="164" r="3.5" fill="var(--gold)" opacity="0.9"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Now Playing + Stop -->
+      <div class="turntable-nowplaying" id="turntable-nowplaying">
+        <span class="np-idle show-en">— Click a record to play —</span>
+        <span class="np-idle show-ar" style="font-family:var(--font-arabic)">— انقر على أسطوانة للتشغيل —</span>
+      </div>
+      <button class="tt-stop-btn" id="tt-stop-btn" aria-label="Stop and eject record" style="display:none">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+        <span class="show-en">Stop &amp; Eject</span>
+        <span class="show-ar" style="font-family:var(--font-arabic)">إيقاف وإخراج</span>
+      </button>
+    </div>
+
+    <p class="records-note show-en">Audio coming in a future update &nbsp;♪</p>
+    <p class="records-note show-ar" style="font-family:var(--font-arabic)">الصوت قادم في تحديث قادم &nbsp;♪</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     PHOTO GALLERY
+============================================================ -->
+<section id="gallery" aria-labelledby="gallery-heading">
+  <div class="container">
+    <header class="sec-header">
+      <span class="sec-label show-en">A Life in Photographs</span>
+      <span class="sec-label show-ar" style="font-family:var(--font-arabic)">حياة في صور</span>
+      <h2 class="sec-title show-en" id="gallery-heading">Photo Gallery</h2>
+      <h2 class="sec-title show-ar" style="font-family:var(--font-arabic)">معرض الصور</h2>
+      <div class="sec-rule"></div>
+    </header>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LIGHTBOX
+============================================================ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button id="lightbox-close" aria-label="Close">&times;</button>
+  <button id="lightbox-prev" aria-label="Previous">&#8249;</button>
+  <img id="lightbox-img" src="" alt="">
+  <button id="lightbox-next" aria-label="Next">&#8250;</button>
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="footer" role="contentinfo">
+  <p class="footer-name show-en">Prof. Ahmed Medhat Shams El Din</p>
+  <p class="footer-name show-ar" style="font-family:var(--font-arabic)">الأستاذ الدكتور أحمد مدحت شمس الدين</p>
+  <p class="footer-dates">Cairo, 1931 &nbsp;—&nbsp; 2008</p>
+  <p class="footer-copy show-en">A family archive — built with care, to last for generations.</p>
+  <p class="footer-copy show-ar" style="font-family:var(--font-arabic)">أرشيف عائلي — أُنشئ بعناية، ليدوم للأجيال.</p>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* ---- Language ---- */
+const root = document.getElementById('html-root');
+const body = document.body;
+let lang = 'en';
+document.getElementById('lang-toggle').addEventListener('click', () => {
+  lang = lang === 'en' ? 'ar' : 'en';
+  body.className = lang;
+  root.setAttribute('lang', lang);
+  root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  document.querySelectorAll('.nav-links a[data-en]').forEach(a => {
+    a.textContent = lang === 'ar' ? a.dataset.ar : a.dataset.en;
+  });
+});
+
+/* ---- Nav scroll ---- */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ---- Feature 3: Metal flip cards ---- */
+document.getElementById('elements-grid').innerHTML = ELEMENTS.map(el => `
+  <div class="el-flip-card" onclick="flipCard(this)" title="${el.name} — tap to learn more">
+    <div class="el-flip-inner">
+      <div class="el-flip-front">
+        <span class="ef-num">${el.num}</span>
+        <span class="ef-sym">${el.sym}</span>
+        <span class="ef-name">${el.name}</span>
+        <span class="ef-hint">tap ↻</span>
+      </div>
+      <div class="el-flip-back">
+        <span class="ef-sym-b">${el.sym}</span>
+        <span class="ef-use">${el.use}</span>
+        <span class="ef-research">${el.research}</span>
+      </div>
+    </div>
+  </div>
+`).join('');
+
+function flipCard(card) {
+  card.classList.toggle('flipped');
+}
+
+/* ---- Timeline ---- */
+document.getElementById('timeline-list').innerHTML = TIMELINE.map(t => `
+  <div class="tl-item" role="listitem">
+    <span class="tl-year">${t.year}${t.note ? ' *' : ''}</span>
+    <div class="tl-title show-en">${t.en}</div>
+    <div class="tl-title show-ar" style="font-family:var(--font-arabic)">${t.ar}</div>
+    ${t.note ? `<div class="tl-note">[${t.note}]</div>` : ''}
+  </div>
+`).join('');
+
+/* ---- PDF books ---- */
+const dlIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`;
+document.getElementById('pub-pdfs').innerHTML = PDFS.map(p => `
+  <a class="pdf-card" href="${encodeURIComponent(p.file)}" download aria-label="Download: ${p.title}">
+    <span class="pdf-lang">Arabic · PDF Book</span>
+    <span class="pdf-title">${p.title}</span>
+    <span class="pdf-dl">${dlIcon} <span class="show-en">Download</span><span class="show-ar" style="font-family:var(--font-arabic)">تحميل</span></span>
+  </a>
+`).join('');
+
+/* ---- Publications ---- */
+const SHOW_INITIAL = 8;
+let showAll = false;
+const journals = [...new Set(PUBLICATIONS.map(p => p.journal))];
+let activeJournal = 'All';
+
+function renderPubs() {
+  const filtered = activeJournal === 'All' ? PUBLICATIONS : PUBLICATIONS.filter(p => p.journal === activeJournal);
+  const visible = showAll ? filtered : filtered.slice(0, SHOW_INITIAL);
+  const extIcon = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+  document.getElementById('pub-list').innerHTML = visible.map(p => {
+    const scholarUrl = 'https://scholar.google.com/scholar?q=' + encodeURIComponent(p.title + ' Shams El Din');
+    const rgUrl = 'https://www.researchgate.net/search?q=' + encodeURIComponent(p.title);
+    return `
+    <div class="pub-item" role="listitem">
+      <div class="pub-year">${p.year}</div>
+      <div>
+        <div class="pub-title">${p.title}</div>
+        <div class="pub-journal">${p.journal}</div>
+        <div class="pub-ext-links">
+          <a class="pub-ext-link" href="${scholarUrl}" target="_blank" rel="noopener">${extIcon} Google Scholar</a>
+          <a class="pub-ext-link" href="${rgUrl}" target="_blank" rel="noopener">${extIcon} ResearchGate</a>
+        </div>
+        ${p.abstract ? `
+          <button class="pub-abstract-toggle" onclick="toggleAbstract(this)" aria-expanded="false">
+            <span class="show-en">Read abstract</span>
+            <span class="show-ar" style="font-family:var(--font-arabic)">اقرأ الملخص</span>
+          </button>
+          <div class="pub-abstract">${p.abstract}</div>
+        ` : ''}
+      </div>
+    </div>`
+  }).join('');
+  const btn = document.getElementById('pub-more-btn');
+  btn.style.display = (filtered.length > SHOW_INITIAL && !showAll) ? '' : 'none';
+}
+
+function toggleAbstract(btn) {
+  const abs = btn.nextElementSibling;
+  const open = abs.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+  const en = btn.querySelector('.show-en');
+  if (en) en.textContent = open ? 'Hide abstract' : 'Read abstract';
+}
+
+document.getElementById('pub-filters').innerHTML = ['All', ...journals].map(j => `
+  <button class="pub-filter-btn ${j === 'All' ? 'active' : ''}" data-journal="${j}">${j === 'All' ? 'All Journals' : j}</button>
+`).join('');
+document.getElementById('pub-filters').addEventListener('click', e => {
+  const btn = e.target.closest('.pub-filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.pub-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeJournal = btn.dataset.journal;
+  showAll = false;
+  renderPubs();
+});
+document.getElementById('pub-more-btn').addEventListener('click', () => { showAll = true; renderPubs(); });
+renderPubs();
+
+/* ---- Awards ---- */
+document.getElementById('awards-grid').innerHTML = AWARDS.map(a => `
+  <div class="award-card">
+    <div class="award-year">${a.year}</div>
+    <div class="award-title show-en">${a.en}</div>
+    <span class="award-title-ar show-ar">${a.ar}</span>
+  </div>
+`).join('');
+
+/* ---- Medals ---- */
+document.getElementById('medals-grid').innerHTML = MEDALS.map((m, i) => `
+  <div class="medal-card" role="button" tabindex="0" aria-label="Medal ${i+1}" onclick="openMedalLightbox(${i})">
+    <img src="${m.src}" alt="Medal ${i+1}" loading="lazy">
+    <div class="medal-overlay"><span class="medal-num">Medal ${i+1}</span></div>
+  </div>
+`).join('');
+
+/* ================================================================
+   FEATURE 1 & 2: CRATE FLIP + TURNTABLE
+================================================================ */
+
+/* --- Crate state --- */
+let crateIndex  = 0;
+let crateDragging = false;
+let crateDragStartX = 0;
+let crateDragOffset = 0;
+const CRATE_SNAP_THRESHOLD = 60; // px to trigger a flip
+
+/* --- Build crate items --- */
+const playBtnSVG = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>`;
+const crateTrack = document.getElementById('crate-track');
+
+crateTrack.innerHTML = RECORDS.map((r, i) => `
+  <div class="crate-item" data-index="${i}" aria-label="Vinyl record ${i+1}">
+    <img src="${r.src}" alt="Vinyl record ${i+1}" loading="lazy">
+    <div class="crate-play-btn" aria-label="Play record ${i+1}">${playBtnSVG}</div>
+  </div>
+`).join('');
+
+const crateItems = Array.from(crateTrack.querySelectorAll('.crate-item'));
+
+/* --- Transform calculator ---
+   pos = position relative to current front (0 = front, ±1 = adjacent, etc.) */
+function crateTransform(pos) {
+  const abs = Math.abs(pos);
+  const sign = pos < 0 ? -1 : 1;
+  return {
+    x:      sign * Math.min(abs, 2.5) * 196,
+    z:      -abs * 90,
+    rotY:   -pos * 22,
+    rotX:   pos === 0 ? -6 : 2,          /* front tilts toward viewer */
+    scale:  Math.max(0.58, 1 - abs * 0.16),
+    opacity: abs > 2.4 ? 0 : Math.max(0.35, 1 - abs * 0.28),
+    zIndex: Math.round(80 - abs * 15),
+  };
+}
+
+/* --- Apply positions to all items --- */
+function renderCrate(animated) {
+  crateItems.forEach((el, i) => {
+    const pos = i - crateIndex;
+    const t = crateTransform(pos);
+    if (animated) {
+      el.style.transition = 'transform 0.46s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s ease';
+    } else {
+      el.style.transition = 'none';
+    }
+    el.style.transform  = `translateX(calc(-50% + ${t.x}px)) translateY(-50%) translateZ(${t.z}px) rotateY(${t.rotY}deg) rotateX(${t.rotX}deg) scale(${t.scale})`;
+    el.style.opacity    = t.opacity;
+    el.style.zIndex     = t.zIndex;
+    el.classList.toggle('crate-front', pos === 0);
+    el.style.pointerEvents = (Math.abs(pos) <= 1) ? 'auto' : 'none';
+  });
+  /* Update counter */
+  document.getElementById('crate-counter').textContent = `${crateIndex + 1} / ${RECORDS.length}`;
+  document.getElementById('crate-prev').disabled = crateIndex === 0;
+  document.getElementById('crate-next').disabled = crateIndex === RECORDS.length - 1;
+}
+
+/* Live drag interpolation (no transition during drag) */
+function renderCrateDrag(rawOffset) {
+  const fractionalOffset = rawOffset / 196;
+  crateItems.forEach((el, i) => {
+    const pos = (i - crateIndex) + fractionalOffset;
+    const t = crateTransform(pos);
+    el.style.transition = 'none';
+    el.style.transform  = `translateX(calc(-50% + ${t.x}px)) translateY(-50%) translateZ(${t.z}px) rotateY(${t.rotY}deg) rotateX(${t.rotX}deg) scale(${t.scale})`;
+    el.style.opacity    = t.opacity;
+    el.style.zIndex     = t.zIndex;
+  });
+}
+
+function crateGoTo(newIndex) {
+  crateIndex = Math.max(0, Math.min(RECORDS.length - 1, newIndex));
+  renderCrate(true);
+}
+
+/* Drag / swipe events */
+const crateScene = document.getElementById('crate-scene');
+
+function onDragStart(x) {
+  crateDragging = true;
+  crateDragStartX = x;
+  crateDragOffset = 0;
+}
+function onDragMove(x) {
+  if (!crateDragging) return;
+  crateDragOffset = x - crateDragStartX;
+  renderCrateDrag(-crateDragOffset / 1.5);  /* slight resistance feel */
+}
+function onDragEnd() {
+  if (!crateDragging) return;
+  crateDragging = false;
+  if (crateDragOffset < -CRATE_SNAP_THRESHOLD) crateGoTo(crateIndex + 1);
+  else if (crateDragOffset > CRATE_SNAP_THRESHOLD) crateGoTo(crateIndex - 1);
+  else renderCrate(true);  /* snap back */
+}
+
+crateScene.addEventListener('mousedown',  e => onDragStart(e.clientX));
+crateScene.addEventListener('mousemove',  e => { if (crateDragging) { e.preventDefault(); onDragMove(e.clientX); }});
+crateScene.addEventListener('mouseup',    () => onDragEnd());
+crateScene.addEventListener('mouseleave', () => onDragEnd());
+crateScene.addEventListener('touchstart', e => onDragStart(e.touches[0].clientX), { passive: true });
+crateScene.addEventListener('touchmove',  e => onDragMove(e.touches[0].clientX),  { passive: true });
+crateScene.addEventListener('touchend',   () => onDragEnd());
+
+document.getElementById('crate-prev').addEventListener('click', () => crateGoTo(crateIndex - 1));
+document.getElementById('crate-next').addEventListener('click', () => crateGoTo(crateIndex + 1));
+
+/* Click on adjacent records to jump to them */
+crateTrack.addEventListener('click', e => {
+  const item = e.target.closest('.crate-item');
+  if (!item) return;
+  const idx = parseInt(item.dataset.index, 10);
+  if (idx !== crateIndex) {
+    crateGoTo(idx);
+    return; /* first click: just bring to front */
+  }
+  /* Click on front record = play */
+  playRecord(idx);
+});
+
+/* Initial render */
+renderCrate(false);
+
+/* ================================================================
+   FEATURE 2: TURNTABLE PLAYBACK
+================================================================ */
+
+let turntableActive = false;
+let turntableCurrentIndex = -1;
+
+const ttPlatter  = document.getElementById('turntable-platter');
+const ttVinyl    = document.getElementById('turntable-vinyl');
+const ttImg      = document.getElementById('turntable-img');
+const ttTonearm  = document.getElementById('tonearm');
+const ttNowPlay  = document.getElementById('turntable-nowplaying');
+const ttStopBtn  = document.getElementById('tt-stop-btn');
+
+function playRecord(index) {
+  const rec = RECORDS[index];
+  turntableCurrentIndex = index;
+
+  /* Update vinyl image */
+  ttImg.src = rec.src;
+  ttVinyl.classList.add('has-record');
+  ttPlatter.classList.add('has-record');
+
+  /* Start spinning */
+  ttVinyl.classList.remove('spinning');
+  void ttVinyl.offsetWidth; /* force reflow to restart animation */
+  ttVinyl.classList.add('spinning');
+
+  /* Swing tonearm into playing position */
+  ttTonearm.classList.add('playing');
+  turntableActive = true;
+
+  /* Update Now Playing */
+  ttNowPlay.innerHTML = `
+    <span class="np-label show-en">Now Playing</span>
+    <span class="np-label show-ar" style="font-family:var(--font-arabic)">يُشغَّل الآن</span>
+    <span class="np-title">${rec.title}</span>
+    <span class="np-artist">${rec.artist}</span>
+  `;
+
+  /* Show stop button */
+  ttStopBtn.style.display = '';
+
+  /* ----------------------------------------------------------------
+     AUDIO HOOK — wire up real audio here when files are ready
+     ----------------------------------------------------------------
+     To enable audio for each record, add an `audio` field to the
+     RECORDS array at the top of this file:
+       { src: 'record 01.jpg', audio: 'audio/record-01.mp3', title: '...', artist: '...' }
+
+     Then uncomment and complete the block below:
+     ---------------------------------------------------------------- */
+  playAudio(index);
+}
+
+/* ---- Stop & Eject ---- */
+function stopRecord() {
+  if (!turntableActive) return;
+  turntableActive = false;
+  turntableCurrentIndex = -1;
+
+  /* Lift the tonearm back to rest */
+  ttTonearm.classList.remove('playing');
+
+  /* Decelerate the vinyl, then clear it */
+  ttVinyl.classList.remove('spinning');
+  ttVinyl.classList.add('decelerating');
+
+  setTimeout(() => {
+    ttVinyl.classList.remove('decelerating', 'has-record');
+    ttPlatter.classList.remove('has-record');
+    ttImg.src = '';
+  }, 1400); /* matches vinylDecel animation duration */
+
+  /* Reset Now Playing label */
+  ttNowPlay.innerHTML = `
+    <span class="np-idle show-en">— Click a record to play —</span>
+    <span class="np-idle show-ar" style="font-family:var(--font-arabic)">— انقر على أسطوانة للتشغيل —</span>
+  `;
+
+  /* Hide stop button */
+  ttStopBtn.style.display = 'none';
+
+  /* Stop audio if wired up */
+  /* const player = document.getElementById('tt-audio-player');
+     if (player) { player.pause(); player.src = ''; } */
+}
+
+ttStopBtn.addEventListener('click', stopRecord);
+
+/* ----------------------------------------------------------------
+   playAudio — stub function. Fill in when audio files are ready.
+   trackIndex: 0-based index into the RECORDS array.
+---------------------------------------------------------------- */
+function playAudio(trackIndex) {
+  /* Example implementation (uncomment and adapt):
+  ─────────────────────────────────────────────────────────────────
+  const record = RECORDS[trackIndex];
+  if (!record.audio) return;                    // no file mapped yet
+
+  let player = document.getElementById('tt-audio-player');
+  if (!player) {
+    player = document.createElement('audio');
+    player.id = 'tt-audio-player';
+    document.body.appendChild(player);
+  }
+  player.pause();
+  player.src = record.audio;
+  player.play().catch(() => {});                // catch autoplay block
+
+  ─────────────────────────────────────────────────────────────────
+  TRACK → FILE MAPPING (fill in paths as you add audio):
+    Index 0 → 'audio/record-01.mp3'
+    Index 1 → 'audio/record-02.mp3'
+    Index 2 → 'audio/record-03.mp3'
+    Index 3 → 'audio/record-04.mp3'  ← Beethoven String Quartets
+    Index 4 → 'audio/record-05.mp3'
+    Index 5 → 'audio/record-06.mp3'
+    Index 6 → 'audio/record-07.mp3'
+    Index 7 → 'audio/record-08.mp3'
+  ─────────────────────────────────────────────────────────────────
+  */
+  console.log('[Turntable] playAudio called for track index:', trackIndex,
+              '| title:', RECORDS[trackIndex].title);
+}
+
+/* ---- Gallery ---- */
+document.getElementById('gallery-grid').innerHTML = PHOTOS.map((p, i) => `
+  <div class="gallery-item" onclick="openLightbox(${i})" role="button" tabindex="0" aria-label="Photo ${i+1}">
+    <img src="${p.src}" alt="${p.caption || 'Photograph ' + (i+1)}" loading="lazy">
+    <div class="gallery-overlay" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+    </div>
+  </div>
+`).join('');
+
+document.querySelectorAll('.gallery-item, .medal-card').forEach(el => {
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
+});
+
+/* ---- Unified lightbox ---- */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+let lbData = [], lbIndex = 0;
+
+function openLightbox(i) {
+  lbData = PHOTOS; lbIndex = i;
+  lbImg.src = PHOTOS[i].src;
+  lbImg.alt = PHOTOS[i].caption || 'Photograph ' + (i+1);
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('lightbox-close').focus();
+}
+function openMedalLightbox(i) {
+  lbData = MEDALS; lbIndex = i;
+  lbImg.src = MEDALS[i].src;
+  lbImg.alt = 'Medal ' + (i+1);
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('lightbox-close').focus();
+}
+function closeLightbox() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+function lightboxNav(dir) {
+  lbIndex = (lbIndex + dir + lbData.length) % lbData.length;
+  lbImg.src = lbData[lbIndex].src;
+  lbImg.alt = lbData[lbIndex].caption || lbData[lbIndex].src;
+}
+
+document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+document.getElementById('lightbox-prev').addEventListener('click', () => lightboxNav(-1));
+document.getElementById('lightbox-next').addEventListener('click', () => lightboxNav(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+});
+</script>
+</body>
+</html>
