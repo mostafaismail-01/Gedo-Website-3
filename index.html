@@ -1078,13 +1078,40 @@ section { padding: 5rem 2rem; }
   position: absolute;
   right: 28px; top: 12px;
   width: 90px; height: 170px;
-  transform-origin: 14px 22px;      /* pivot on the disc */
-  transform: rotate(30deg);          /* resting: off the record */
-  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 14px 22px;
+  transform: rotate(15deg);   /* rest: stylus parked right of record */
   z-index: 5;
+  will-change: transform;
 }
 .tonearm-container.playing {
-  transform: rotate(-3deg);           /* playing: stylus over record */
+  transform: rotate(67deg);   /* playing: stylus on outer groove */
+}
+.tonearm-container.dropping {
+  animation: armDrop 1.6s ease-out forwards;
+}
+.tonearm-container.lifting {
+  animation: armLift 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes armDrop {
+  0%   { transform: rotate(15deg); }
+  52%  { transform: rotate(72deg); }  /* overshoot past groove */
+  68%  { transform: rotate(63deg); }  /* bounce back */
+  80%  { transform: rotate(69deg); }  /* settle oscillation */
+  90%  { transform: rotate(65.5deg); }
+  100% { transform: rotate(67deg); }  /* lands on record */
+}
+
+@keyframes armLift {
+  0%   { transform: rotate(67deg); }
+  18%  { transform: rotate(55deg); }  /* lift off groove */
+  100% { transform: rotate(15deg); }  /* sweep to rest */
+}
+
+/* Needle glow when arm is on record */
+.tonearm-container.playing circle:last-child,
+.tonearm-container.dropping circle:last-child {
+  filter: drop-shadow(0 0 5px rgba(196,160,53,1)) drop-shadow(0 0 10px rgba(196,160,53,0.6));
 }
 
 /* Turntable base glows amber when playing */
@@ -1095,10 +1122,6 @@ section { padding: 5rem 2rem; }
               0 0 52px rgba(196,160,53,0.18);
 }
 
-/* Tonearm stylus needle glow when playing */
-.tonearm-container.playing circle:last-child {
-  filter: drop-shadow(0 0 5px rgba(196,160,53,0.9));
-}
 
 /* Now Playing retro display */
 .turntable-nowplaying {
@@ -2091,8 +2114,14 @@ function playRecord(index) {
   void ttVinyl.offsetWidth; /* force reflow to restart animation */
   ttVinyl.classList.add('spinning');
 
-  /* Swing tonearm into playing position */
-  ttTonearm.classList.add('playing');
+  /* Drop tonearm onto record with bounce settle */
+  ttTonearm.classList.remove('lifting', 'playing');
+  void ttTonearm.offsetWidth;
+  ttTonearm.classList.add('dropping');
+  ttTonearm.addEventListener('animationend', () => {
+    ttTonearm.classList.remove('dropping');
+    ttTonearm.classList.add('playing');
+  }, { once: true });
   turntableActive = true;
 
   /* Update Now Playing */
@@ -2117,8 +2146,13 @@ function stopRecord() {
   turntableActive = false;
   turntableCurrentIndex = -1;
 
-  /* Lift the tonearm back to rest */
-  ttTonearm.classList.remove('playing');
+  /* Lift the tonearm off the record and sweep to rest */
+  ttTonearm.classList.remove('dropping');
+  void ttTonearm.offsetWidth;
+  ttTonearm.classList.add('lifting');
+  ttTonearm.addEventListener('animationend', () => {
+    ttTonearm.classList.remove('lifting', 'playing');
+  }, { once: true });
 
   /* Decelerate the vinyl, then clear it */
   ttVinyl.classList.remove('spinning');
