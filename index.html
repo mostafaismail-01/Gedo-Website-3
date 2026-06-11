@@ -26,6 +26,9 @@
   --copper-pale:    #f0dcc0;
   --gold:           #c4a035;
   --gold-pale:      #f5e8b0;
+  --verdigris:       #4f9e8a;
+  --verdigris-light: #6fc2a8;
+  --lapis:           #2c5f8a;
 
   --font-serif:   'EB Garamond', Georgia, serif;
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -1271,6 +1274,357 @@ section { padding: 5rem 2rem; }
   .turntable-nowplaying { min-width: 0; width: 100%; padding: 0.7rem 1rem; }
 }
 
+/* ================================================================
+   FEATURE — DARKROOM HERO LOAD
+   The hero develops like a photographic print: portrait resolves
+   from overexposed paper, frame corners draw in, text settles.
+================================================================ */
+@keyframes heroDevelop {
+  0%   { filter: sepia(55%) contrast(0.3) brightness(2.4) saturate(0.4); }
+  55%  { filter: sepia(35%) contrast(0.75) brightness(1.45) saturate(0.7); }
+  100% { filter: sepia(10%) contrast(1.05) brightness(0.98) saturate(1); }
+}
+.hero-portrait {
+  animation: heroDevelop 2.6s cubic-bezier(0.3, 0, 0.3, 1) both;
+}
+
+@keyframes heroFrameFade { from { opacity: 0; } }
+.portrait-wrap::before { animation: heroFrameFade 1.2s ease 0.5s backwards; }
+.portrait-wrap::after  { animation: heroFrameFade 1.2s ease 0.7s backwards; }
+
+/* corners grow out of their anchored corner */
+@keyframes cornerDraw {
+  from { width: 0; height: 0; opacity: 0; }
+  to   { width: 16px; height: 16px; opacity: 1; }
+}
+.portrait-wrap .corner.tl { animation: cornerDraw 0.5s ease-out 0.55s backwards; }
+.portrait-wrap .corner.tr { animation: cornerDraw 0.5s ease-out 0.70s backwards; }
+.portrait-wrap .corner.br { animation: cornerDraw 0.5s ease-out 0.85s backwards; }
+.portrait-wrap .corner.bl { animation: cornerDraw 0.5s ease-out 1.00s backwards; }
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes heroNameSettle {
+  from { opacity: 0; letter-spacing: 0.22em; filter: blur(3px); }
+  to   { opacity: 1; letter-spacing: 0.03em; filter: blur(0); }
+}
+@keyframes heroRuleGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes heroFadeIn   { from { opacity: 0; } }
+
+.hero-pre      { animation: heroRise 0.9s ease 0.9s backwards; }
+.hero-name     { animation: heroNameSettle 1.2s cubic-bezier(0.2, 0, 0.2, 1) 1.15s backwards; }
+.hero-dates    { animation: heroRise 0.9s ease 1.6s backwards; }
+.hero-rule     { animation: heroRuleGrow 0.9s cubic-bezier(0.2, 0, 0.2, 1) 1.8s backwards; }
+.hero-subtitle { animation: heroRise 0.9s ease 2.0s backwards; }
+.hero-quote    { animation: heroRise 1.0s ease 2.25s backwards; }
+.hero-scroll-cue { animation: heroFadeIn 1.4s ease 2.8s backwards; }
+#hero::before, #hero::after { animation: heroFadeIn 2.2s ease backwards; }
+
+/* hero polarization curve draws itself during the load sequence */
+.hero-curve { animation: heroFadeIn 1.6s ease 1.2s backwards; }
+.hero-curve .hc-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: tafelDraw 1.6s cubic-bezier(0.4, 0, 0.3, 1) 1.8s both;
+}
+.hero-curve .hc-draw.hc-cathodic { animation-delay: 2.2s; }
+
+/* ================================================================
+   FEATURE — COPPER PATINA RULES
+   Section rules oxidise as they enter the viewport: polished
+   copper develops a creeping verdigris bloom (his chemistry).
+================================================================ */
+.sec-rule {
+  position: relative;
+  transition: width 2.4s cubic-bezier(0.25, 0, 0.2, 1);
+}
+.sec-rule::after {
+  content: '';
+  position: absolute;
+  inset: -2px 0;
+  filter: blur(0.6px);
+  background:
+    radial-gradient(ellipse 18% 160% at 10% 50%, #5fb39a 0%, transparent 75%),
+    radial-gradient(ellipse 22% 200% at 34% 20%, #357f6d 0%, transparent 70%),
+    radial-gradient(ellipse 16% 150% at 58% 80%, #6fc2a8 0%, transparent 75%),
+    radial-gradient(ellipse 24% 180% at 82% 40%, #3f8f7a 0%, transparent 70%),
+    linear-gradient(90deg, rgba(79,158,138,0.85), rgba(111,181,160,0.55));
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 3.2s cubic-bezier(0.3, 0, 0.4, 1);
+}
+.sec-rule.patina { width: 90px; }
+.sec-rule.patina::after { clip-path: inset(0 0 0 0); }
+
+/* award-card corner ornaments quietly patinate on hover */
+.award-card::before, .award-card::after { transition: border-color 1.4s ease; }
+.award-card:hover::before, .award-card:hover::after { border-color: #4f9e8a; }
+
+/* ================================================================
+   FEATURE — TAFEL CURVE DRAWS ITSELF (bio sidebar)
+================================================================ */
+@keyframes tafelDraw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes tafelFadeIn { from { opacity: 0; } }
+@keyframes tafelPop {
+  0%   { transform: scale(0); }
+  70%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+/* hidden until the panel scrolls into view */
+.curve-panel:not(.drawn) .tafel-grid,
+.curve-panel:not(.drawn) .tafel-axes,
+.curve-panel:not(.drawn) .tafel-marks,
+.curve-panel:not(.drawn) .tafel-lbl   { opacity: 0; }
+.curve-panel:not(.drawn) .tafel-point { transform: scale(0); }
+.curve-panel:not(.drawn) .tafel-anodic,
+.curve-panel:not(.drawn) .tafel-cathodic {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.tafel-point { transform-box: fill-box; transform-origin: center; }
+
+.curve-panel.drawn .tafel-grid     { animation: tafelFadeIn 0.8s ease both; }
+.curve-panel.drawn .tafel-axes     { animation: tafelFadeIn 0.9s ease 0.15s backwards; }
+.curve-panel.drawn .tafel-anodic   { stroke-dasharray: 1; animation: tafelDraw 1.3s cubic-bezier(0.4, 0, 0.3, 1) 0.55s both; }
+.curve-panel.drawn .tafel-cathodic { stroke-dasharray: 1; animation: tafelDraw 1.3s cubic-bezier(0.4, 0, 0.3, 1) 0.95s both; }
+.curve-panel.drawn .tafel-lbl-a    { animation: tafelFadeIn 0.6s ease 1.6s backwards; }
+.curve-panel.drawn .tafel-lbl-c    { animation: tafelFadeIn 0.6s ease 2.0s backwards; }
+.curve-panel.drawn .tafel-marks    { animation: tafelFadeIn 0.8s ease 2.3s backwards; }
+.curve-panel.drawn .tafel-point    { animation: tafelPop 0.55s cubic-bezier(0.3, 0, 0.3, 1.4) 2.5s backwards; }
+
+/* ================================================================
+   REDUCED MOTION — disable choreography for users who opt out
+================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait, .portrait-wrap::before, .portrait-wrap::after,
+  .portrait-wrap .corner, .hero-pre, .hero-name, .hero-dates,
+  .hero-rule, .hero-subtitle, .hero-quote, .hero-scroll-cue,
+  #hero::before, #hero::after, .hero-curve, .hero-curve .hc-draw,
+  .curve-panel.drawn .tafel-grid, .curve-panel.drawn .tafel-axes,
+  .curve-panel.drawn .tafel-anodic, .curve-panel.drawn .tafel-cathodic,
+  .curve-panel.drawn .tafel-lbl-a, .curve-panel.drawn .tafel-lbl-c,
+  .curve-panel.drawn .tafel-marks, .curve-panel.drawn .tafel-point {
+    animation: none !important;
+  }
+  .curve-panel:not(.drawn) .tafel-grid,
+  .curve-panel:not(.drawn) .tafel-axes,
+  .curve-panel:not(.drawn) .tafel-marks,
+  .curve-panel:not(.drawn) .tafel-lbl   { opacity: revert; }
+  .curve-panel:not(.drawn) .tafel-point { transform: none; }
+  .curve-panel:not(.drawn) .tafel-anodic,
+  .curve-panel:not(.drawn) .tafel-cathodic { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .sec-rule, .sec-rule::after { transition: none; }
+}
+
+/* ================================================================
+   FEATURE — MOBILE NAV (burger + full-screen menu)
+================================================================ */
+.nav-burger {
+  display: none;
+  justify-self: end;
+  background: none; border: none;
+  width: 40px; height: 40px;
+  flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 5px;
+}
+.nav-burger span {
+  display: block;
+  width: 20px; height: 1.5px;
+  background: var(--gold);
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.3s;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+#mobile-menu {
+  position: fixed;
+  inset: var(--nav-h) 0 0 0;
+  z-index: 199;
+  background: rgba(20, 38, 28, 0.97);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+#mobile-menu.open { opacity: 1; pointer-events: auto; }
+#mobile-menu a {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--parchment);
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0, 0.2, 1), color 0.3s;
+}
+#mobile-menu.open a {
+  opacity: 1; transform: none;
+  transition-delay: calc(var(--i) * 60ms);
+}
+#mobile-menu a:active, #mobile-menu a:hover { color: var(--gold); }
+#mobile-menu .mm-rule {
+  width: 70px; height: 1px;
+  margin-top: 0.5rem;
+  background: linear-gradient(90deg, var(--copper), var(--gold), var(--verdigris));
+  opacity: 0; transition: opacity 0.6s ease 0.45s;
+}
+#mobile-menu.open .mm-rule { opacity: 1; }
+@media (max-width: 640px) { .nav-burger { display: flex; } }
+@media (min-width: 641px) { #mobile-menu { display: none; } }
+
+/* ================================================================
+   FEATURE — PATINA SCROLL PROGRESS BAR
+   Copper at the start of the page, fully verdigris by the end.
+================================================================ */
+#scroll-progress {
+  position: fixed;
+  top: var(--nav-h); left: 0; right: 0;
+  height: 2px; z-index: 201;
+  background: linear-gradient(90deg, var(--copper), var(--gold) 45%, var(--verdigris));
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* ================================================================
+   FEATURE — AMBIENT ATMOSPHERE
+   Hero aurora breathes; dot lattices drift like a crystal lattice.
+================================================================ */
+#hero::before {
+  background:
+    radial-gradient(ellipse 55% 65% at 50% 45%, rgba(196,160,53,0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 42% 52% at 16% 72%, rgba(79,158,138,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 46% 56% at 84% 26%, rgba(44,95,138,0.09) 0%, transparent 70%);
+  animation: heroFadeIn 2.2s ease backwards, auroraBreathe 17s ease-in-out 2.2s infinite alternate;
+}
+@keyframes auroraBreathe {
+  0%   { transform: translate(-1.5%, -1%) scale(1);    opacity: 0.85; }
+  100% { transform: translate(1.5%, 1.5%) scale(1.07); opacity: 1; }
+}
+@keyframes latticeDrift {
+  from { background-position: 0 0, 20px 20px; }
+  to   { background-position: 160px 80px, 100px 100px; }
+}
+#hero::after { animation: heroFadeIn 2.2s ease backwards, latticeDrift 110s linear infinite; }
+@keyframes latticeDriftOne { from { background-position: 0 0; } to { background-position: 120px 60px; } }
+#medals::before { animation: latticeDriftOne 130s linear infinite; }
+
+/* ================================================================
+   FEATURE — SCROLL-REVEAL CHOREOGRAPHY
+   Grids and headers rise in with a stagger; images develop from
+   washed-out sepia like darkroom prints as they enter the view.
+================================================================ */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(26px); }
+}
+@keyframes revealDevelop {
+  from { filter: sepia(50%) brightness(1.35) contrast(0.82); }
+}
+.reveal:not(.in) > * { opacity: 0; }
+.reveal.in > * {
+  animation: revealUp 0.9s cubic-bezier(0.2, 0, 0.2, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 80ms);
+}
+.reveal.in > * img {
+  animation: revealDevelop 1.5s ease backwards;
+  animation-delay: calc(var(--i, 0) * 80ms);
+}
+
+/* ================================================================
+   FEATURE — MICRO-MOTION & COLOR ACCENTS
+================================================================ */
+/* nav links: gold underline draws in */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0.42rem; right: 0.42rem; bottom: 1px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0.2, 1);
+}
+.nav-links a:hover::after { transform: scaleX(1); }
+
+/* hero portrait drifts gently with the cursor (set via JS) */
+.portrait-wrap { transition: transform 0.7s cubic-bezier(0.15, 0, 0.2, 1); }
+
+/* medals: museum-light glint sweep on hover */
+.medal-card::after {
+  content: '';
+  position: absolute;
+  top: -60%; left: -85%;
+  width: 55%; height: 220%;
+  transform: rotate(22deg);
+  background: linear-gradient(90deg, transparent, rgba(255,236,170,0.20), transparent);
+  transition: left 0.9s cubic-bezier(0.3, 0, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+.medal-card:hover::after { left: 135%; }
+
+/* records: front record idles in a slow spin, sheen rotates on hover */
+.crate-item.crate-front img { animation: slowSpin 48s linear infinite; }
+@keyframes slowSpin { to { transform: rotate(360deg); } }
+.crate-item::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+    transparent 0deg, rgba(255,255,255,0.10) 16deg, transparent 38deg,
+    transparent 178deg, rgba(255,255,255,0.05) 196deg, transparent 218deg);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  animation: glintSpin 7s linear infinite;
+}
+@keyframes glintSpin { to { transform: rotate(360deg); } }
+.crate-item.crate-front:hover::before { opacity: 1; }
+
+/* publications: links and books pick up verdigris accents */
+.pub-profile-link:hover { border-color: var(--verdigris); color: var(--verdigris); background: rgba(79,158,138,0.07); }
+.pdf-card { transition: transform 0.25s, box-shadow 0.25s, border-color 0.6s; }
+.pdf-card:hover { border-left-color: var(--verdigris); box-shadow: 0 8px 28px rgba(24,46,34,0.28); }
+.pub-ext-link:hover { color: var(--verdigris); }
+.pub-abstract-toggle:hover { color: var(--verdigris); }
+
+/* footer: a slow gold shimmer breathes across his name */
+.footer-name {
+  background: linear-gradient(110deg, var(--gold) 30%, #f3e3a4 50%, var(--gold) 70%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: nameShimmer 8s ease-in-out infinite;
+}
+@keyframes nameShimmer {
+  0%, 100% { background-position: 0% 0; }
+  50%      { background-position: 100% 0; }
+}
+
+/* ================================================================
+   REDUCED MOTION — additions for the new effects
+================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  #hero::before, #hero::after, #medals::before,
+  .crate-item.crate-front img, .crate-item::before,
+  .footer-name, .reveal.in > *, .reveal.in > * img {
+    animation: none !important;
+  }
+  .reveal:not(.in) > * { opacity: revert; }
+  #mobile-menu, #mobile-menu a, .portrait-wrap, .medal-card::after { transition: none; }
+}
+
 </style>
 </head>
 <body>
@@ -1410,14 +1764,31 @@ const ELEMENTS = [
   </a>
   <ul class="nav-links" role="list">
     <li><a href="#biography"    data-en="Biography">Biography</a></li>
+    <!-- Timeline hidden for now — restore by uncommenting this link and the section below
     <li><a href="#timeline"     data-en="Timeline">Timeline</a></li>
+    -->
     <li><a href="#publications" data-en="Research">Research</a></li>
     <li><a href="#awards"       data-en="Awards">Awards</a></li>
     <li><a href="#medals"       data-en="Medals">Medals</a></li>
     <li><a href="#records"      data-en="Records">Records</a></li>
     <li><a href="#gallery"      data-en="Gallery">Gallery</a></li>
   </ul>
+  <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div id="mobile-menu" aria-hidden="true">
+  <a href="#biography"    style="--i:0">Biography</a>
+  <a href="#publications" style="--i:1">Research</a>
+  <a href="#awards"       style="--i:2">Awards</a>
+  <a href="#medals"       style="--i:3">Medals</a>
+  <a href="#records"      style="--i:4">Records</a>
+  <a href="#gallery"      style="--i:5">Gallery</a>
+  <div class="mm-rule" aria-hidden="true"></div>
+</div>
+
+<div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- ============================================================
      HERO
@@ -1429,8 +1800,8 @@ const ELEMENTS = [
     <line x1="30" y1="160" x2="210" y2="160" stroke="#c4a035" stroke-width="1"/>
     <text x="14" y="88" font-size="9" fill="#c4a035" transform="rotate(-90 20 90)" font-family="Georgia">E (V)</text>
     <text x="105" y="175" font-size="9" fill="#c4a035" font-family="Georgia" text-anchor="middle">log i (A/cm²)</text>
-    <path d="M 30 130 Q 80 100 130 55 Q 160 30 190 15" stroke="#b87333" stroke-width="1.5"/>
-    <path d="M 30 40 Q 70 70 110 110 Q 150 140 190 155" stroke="#4a7c59" stroke-width="1.5"/>
+    <path class="hc-draw" pathLength="1" d="M 30 130 Q 80 100 130 55 Q 160 30 190 15" stroke="#b87333" stroke-width="1.5"/>
+    <path class="hc-draw hc-cathodic" pathLength="1" d="M 30 40 Q 70 70 110 110 Q 150 140 190 155" stroke="#4a7c59" stroke-width="1.5"/>
     <circle cx="105" cy="85" r="3" fill="none" stroke="#c4a035" stroke-width="1"/>
     <line x1="105" y1="85" x2="30" y2="85" stroke="#c4a035" stroke-width="0.5" stroke-dasharray="3 3"/>
     <line x1="105" y1="85" x2="105" y2="160" stroke="#c4a035" stroke-width="0.5" stroke-dasharray="3 3"/>
@@ -1503,66 +1874,63 @@ const ELEMENTS = [
                aria-label="Tafel polarization plot showing anodic and cathodic branches intersecting at the corrosion potential">
 
             <!-- Faint grid (does not extend into label zone x > 215) -->
-            <line x1="55" y1="52" x2="215" y2="52" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
-            <line x1="55" y1="98" x2="215" y2="98" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
-            <line x1="55" y1="144" x2="215" y2="144" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
-            <line x1="110" y1="10" x2="110" y2="176" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
-            <line x1="165" y1="10" x2="165" y2="176" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+            <g class="tafel-grid">
+              <line x1="55" y1="52" x2="215" y2="52" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+              <line x1="55" y1="98" x2="215" y2="98" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+              <line x1="55" y1="144" x2="215" y2="144" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+              <line x1="110" y1="10" x2="110" y2="176" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+              <line x1="165" y1="10" x2="165" y2="176" stroke="#c4a035" stroke-width="0.3" opacity="0.12" stroke-dasharray="4 5"/>
+            </g>
 
-            <!-- Y-axis -->
-            <line x1="55" y1="176" x2="55" y2="8" stroke="#c4a035" stroke-width="0.9" opacity="0.5"/>
-            <!-- X-axis -->
-            <line x1="55" y1="176" x2="220" y2="176" stroke="#c4a035" stroke-width="0.9" opacity="0.5"/>
+            <!-- Axes, arrows and axis labels -->
+            <g class="tafel-axes">
+              <line x1="55" y1="176" x2="55" y2="8" stroke="#c4a035" stroke-width="0.9" opacity="0.5"/>
+              <line x1="55" y1="176" x2="220" y2="176" stroke="#c4a035" stroke-width="0.9" opacity="0.5"/>
+              <polygon points="55,5 52,13 58,13" fill="#c4a035" opacity="0.5"/>
+              <polygon points="223,176 215,173 215,179" fill="#c4a035" opacity="0.5"/>
+              <text transform="translate(17,105) rotate(-90)"
+                    font-size="10" fill="#c4a035" font-family="Georgia" font-style="italic"
+                    opacity="0.6" text-anchor="middle">E (V)</text>
+              <text x="135" y="193"
+                    font-size="10" fill="#c4a035" font-family="Georgia" font-style="italic"
+                    opacity="0.6" text-anchor="middle">log i</text>
+            </g>
 
-            <!-- Axis arrows -->
-            <polygon points="55,5 52,13 58,13" fill="#c4a035" opacity="0.5"/>
-            <polygon points="223,176 215,173 215,179" fill="#c4a035" opacity="0.5"/>
-
-            <!-- Y-axis label: vertical, left of axis, clear of everything -->
-            <text transform="translate(17,105) rotate(-90)"
-                  font-size="10" fill="#c4a035" font-family="Georgia" font-style="italic"
-                  opacity="0.6" text-anchor="middle">E (V)</text>
-
-            <!-- X-axis label: below axis, horizontally centred on the plot -->
-            <text x="135" y="193"
-                  font-size="10" fill="#c4a035" font-family="Georgia" font-style="italic"
-                  opacity="0.6" text-anchor="middle">log i</text>
-
-            <!-- Ecorr tick on y-axis + small label to its left -->
-            <line x1="50" y1="98" x2="60" y2="98" stroke="#c4a035" stroke-width="1" opacity="0.5"/>
-            <text x="48" y="102" font-size="7.5" fill="#c4a035" font-family="Georgia"
-                  text-anchor="end" opacity="0.6"
-                  stroke="#182e22" stroke-width="3" paint-order="stroke fill">Ecorr</text>
-
-            <!-- icorr tick on x-axis + small label below it -->
-            <line x1="135" y1="171" x2="135" y2="181" stroke="#c4a035" stroke-width="1" opacity="0.5"/>
-            <text x="135" y="188" font-size="7.5" fill="#c4a035" font-family="Georgia"
-                  text-anchor="middle" opacity="0.6"
-                  stroke="#c4a035" stroke-width="0" paint-order="stroke fill">icorr</text>
-
-            <!-- Dashed crosshairs to corrosion point -->
-            <line x1="55" y1="98" x2="135" y2="98"
-                  stroke="#c4a035" stroke-width="0.6" stroke-dasharray="3 3" opacity="0.4"/>
-            <line x1="135" y1="98" x2="135" y2="176"
-                  stroke="#c4a035" stroke-width="0.6" stroke-dasharray="3 3" opacity="0.4"/>
+            <!-- Ticks, crosshairs and Ecorr/icorr labels -->
+            <g class="tafel-marks">
+              <line x1="50" y1="98" x2="60" y2="98" stroke="#c4a035" stroke-width="1" opacity="0.5"/>
+              <text x="48" y="102" font-size="7.5" fill="#c4a035" font-family="Georgia"
+                    text-anchor="end" opacity="0.6"
+                    stroke="#182e22" stroke-width="3" paint-order="stroke fill">Ecorr</text>
+              <line x1="135" y1="171" x2="135" y2="181" stroke="#c4a035" stroke-width="1" opacity="0.5"/>
+              <text x="135" y="188" font-size="7.5" fill="#c4a035" font-family="Georgia"
+                    text-anchor="middle" opacity="0.6"
+                    stroke="#c4a035" stroke-width="0" paint-order="stroke fill">icorr</text>
+              <line x1="55" y1="98" x2="135" y2="98"
+                    stroke="#c4a035" stroke-width="0.6" stroke-dasharray="3 3" opacity="0.4"/>
+              <line x1="135" y1="98" x2="135" y2="176"
+                    stroke="#c4a035" stroke-width="0.6" stroke-dasharray="3 3" opacity="0.4"/>
+            </g>
 
             <!-- Corrosion point -->
-            <circle cx="135" cy="98" r="4.5" fill="none" stroke="#c4a035" stroke-width="1.5" opacity="0.85"/>
+            <circle class="tafel-point" cx="135" cy="98" r="4.5" fill="none" stroke="#c4a035" stroke-width="1.5" opacity="0.85"/>
 
             <!-- ANODIC curve — ends at x=212, label zone starts x=218 -->
-            <path d="M 55 154 C 82 142, 115 118, 135 96 C 156 74, 192 50, 212 40"
+            <path class="tafel-anodic" pathLength="1"
+                  d="M 55 154 C 82 142, 115 118, 135 96 C 156 74, 192 50, 212 40"
                   stroke="#b87333" stroke-width="2.2" stroke-linecap="round"/>
 
             <!-- anodic label: to the right of curve end, at same height -->
-            <text x="218" y="46" font-size="10" fill="#b87333" font-family="Georgia" font-style="italic"
+            <text class="tafel-lbl tafel-lbl-a" x="218" y="46" font-size="10" fill="#b87333" font-family="Georgia" font-style="italic"
                   stroke="#182e22" stroke-width="4" paint-order="stroke fill">anodic</text>
 
             <!-- CATHODIC curve — ends at x=212 -->
-            <path d="M 55 44 C 82 60, 114 86, 135 100 C 157 116, 192 146, 212 158"
+            <path class="tafel-cathodic" pathLength="1"
+                  d="M 55 44 C 82 60, 114 86, 135 100 C 157 116, 192 146, 212 158"
                   stroke="#4a7c59" stroke-width="2.2" stroke-linecap="round"/>
 
             <!-- cathodic label: to the right of curve end, at same height -->
-            <text x="218" y="164" font-size="10" fill="#4a7c59" font-family="Georgia" font-style="italic"
+            <text class="tafel-lbl tafel-lbl-c" x="218" y="164" font-size="10" fill="#4a7c59" font-family="Georgia" font-style="italic"
                   stroke="#182e22" stroke-width="4" paint-order="stroke fill">cathodic</text>
 
           </svg>
@@ -1576,6 +1944,7 @@ const ELEMENTS = [
 <!-- ============================================================
      TIMELINE
 ============================================================ -->
+<!-- Timeline hidden for now — uncomment to restore (also restore the nav link and the render block in the JS)
 <section id="timeline" aria-labelledby="timeline-heading">
   <div class="container">
     <header class="sec-header">
@@ -1586,6 +1955,7 @@ const ELEMENTS = [
     <div class="timeline-list" id="timeline-list" role="list"></div>
   </div>
 </section>
+-->
 
 <!-- ============================================================
      PUBLICATIONS
@@ -1768,6 +2138,16 @@ window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
+/* ---- Scroll-triggered effects: patina rules + Tafel curve draw ---- */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add(entry.target.classList.contains('curve-panel') ? 'drawn' : 'patina');
+    revealObserver.unobserve(entry.target);
+  });
+}, { rootMargin: '0px 0px -12% 0px' });
+document.querySelectorAll('.sec-rule, .curve-panel').forEach(el => revealObserver.observe(el));
+
 /* ---- Feature 3: Metal flip cards ---- */
 document.getElementById('elements-grid').innerHTML = ELEMENTS.map(el => `
   <div class="el-flip-card" onclick="flipCard(this)" title="${el.name} — tap to learn more">
@@ -1791,7 +2171,7 @@ function flipCard(card) {
   card.classList.toggle('flipped');
 }
 
-/* ---- Timeline ---- */
+/* ---- Timeline (hidden for now — uncomment along with the section HTML to restore) ----
 document.getElementById('timeline-list').innerHTML = TIMELINE.map(t => `
   <div class="tl-item" role="listitem">
     <span class="tl-year">${t.year}${t.note ? ' *' : ''}</span>
@@ -1799,6 +2179,7 @@ document.getElementById('timeline-list').innerHTML = TIMELINE.map(t => `
     ${t.note ? `<div class="tl-note">[${t.note}]</div>` : ''}
   </div>
 `).join('');
+*/
 
 /* ---- PDF books ---- */
 const dlIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`;
@@ -2177,6 +2558,72 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') lightboxNav(-1);
   if (e.key === 'ArrowRight') lightboxNav(1);
 });
+
+/* ================================================================
+   MOTION LAYER — progress bar, mobile menu, reveals, tilt, parallax
+================================================================ */
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- Patina scroll progress ---- */
+const scrollProgress = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  scrollProgress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+}, { passive: true });
+
+/* ---- Mobile menu ---- */
+const burger = document.getElementById('nav-burger');
+const mobileMenu = document.getElementById('mobile-menu');
+function setMenu(open) {
+  burger.classList.toggle('open', open);
+  mobileMenu.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+  mobileMenu.setAttribute('aria-hidden', !open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+burger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+
+/* ---- Scroll-reveal choreography ---- */
+const revealTargets = document.querySelectorAll(
+  '.sec-header, #elements-grid, #awards-grid, #medals-grid, #gallery-grid, #pub-pdfs, .pub-profiles, .crate-outer, .turntable-section'
+);
+const inViewObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('in');
+    inViewObserver.unobserve(entry.target);
+  });
+}, { rootMargin: '0px 0px -8% 0px' });
+revealTargets.forEach(el => {
+  el.classList.add('reveal');
+  Array.from(el.children).forEach((child, i) => child.style.setProperty('--i', Math.min(i, 12)));
+  if (prefersReducedMotion) { el.classList.add('in'); return; }
+  inViewObserver.observe(el);
+});
+
+/* ---- Medal cards: museum tilt toward the cursor ---- */
+if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+  document.querySelectorAll('.medal-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = `translateY(-3px) perspective(600px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+
+  /* ---- Hero portrait: gentle parallax drift ---- */
+  const heroEl = document.getElementById('hero');
+  const portraitWrap = document.querySelector('.portrait-wrap');
+  heroEl.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth  - 0.5) * 10;
+    const y = (e.clientY / window.innerHeight - 0.5) * 8;
+    portraitWrap.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+  });
+  heroEl.addEventListener('mouseleave', () => { portraitWrap.style.transform = ''; });
+}
 </script>
 </body>
 </html>
