@@ -1265,8 +1265,84 @@ section { padding: 5rem 2rem; }
   animation: vinylDecel 1.4s cubic-bezier(0.4, 0, 1, 0.6) forwards !important;
 }
 
+/* ================================================================
+   FEATURE — RECORD GROUPS
+   "Listen": the playable discs. "The Collection": archival sleeves
+   whose recordings have not been preserved — deliberately inert.
+================================================================ */
+.record-group-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.record-group-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--copper);
+  display: block;
+}
+.record-group-note {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--ink-light);
+  opacity: 0.65;
+  margin-top: 0.35rem;
+}
+
+.archive-block {
+  margin-top: 4.5rem;
+  padding-top: 3.25rem;
+  border-top: 1px solid var(--parchment-dark);
+}
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 150px));
+  justify-content: center;
+  gap: 2rem 2.5rem;
+}
+.archive-item {
+  margin: 0;
+  text-align: center;
+}
+.archive-disc {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 5px 16px rgba(0,0,0,0.2);
+}
+.archive-disc img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: sepia(30%) saturate(0.55) contrast(0.94) brightness(0.97);
+}
+/* centre hole, matching the playable discs */
+.archive-disc::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--parchment-mid);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.18);
+}
+.archive-item figcaption {
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  opacity: 0.55;
+  margin-top: 0.7rem;
+}
+
 /* Mobile crate adjustments */
 @media (max-width: 640px) {
+  .archive-grid { grid-template-columns: repeat(2, minmax(100px, 130px)); }
   .crate-scene  { height: 260px; }
   .crate-item   { width: 170px; height: 170px; }
   .crate-play-btn { width: 64px; height: 64px; opacity: 0.35; }
@@ -1666,16 +1742,22 @@ const MEDALS = [
   { src: 'medal 13.jpg' },
 ];
 
-/* ---- RECORDS — add title/artist when known ---- */
+/* ---- RECORDS — the four discs whose recordings are preserved.
+        These are the only playable records; they feed the crate + turntable. ---- */
 const RECORDS = [
-  { src: 'record 01.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
-  { src: 'record 02.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
-  { src: 'record 03.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
   { src: 'record 04.jpg', title: 'String Quartet No. 7 in F major, Op. 59 No. 1 "Razumovsky"', artist: 'Ludwig van Beethoven', audio: 'record 04.mp3' },
   { src: 'record 05.jpg', title: 'Scheherazade, Op. 35', artist: 'Nikolai Rimsky-Korsakov', audio: 'record 05.mp3' },
   { src: 'record 06.jpg', title: 'Brandenburg Concerto No. 3 in G major, BWV 1048', artist: 'Johann Sebastian Bach', audio: 'record 06.mp3' },
   { src: 'record 07.jpg', title: 'Piano Concerto No. 1 in B♭ minor, Op. 23', artist: 'Pyotr Ilyich Tchaikovsky', audio: 'record 07.mp3' },
-  { src: 'record 08.jpg', title: 'TODO: Record title', artist: 'TODO: Artist' },
+];
+
+/* ---- ARCHIVE RECORDS — sleeves survive, recordings do not.
+        Displayed as artefacts only; add title/artist when known. ---- */
+const ARCHIVE_RECORDS = [
+  { src: 'record 01.jpg' },
+  { src: 'record 02.jpg' },
+  { src: 'record 03.jpg' },
+  { src: 'record 08.jpg' },
 ];
 
 const TIMELINE = [
@@ -2041,6 +2123,12 @@ const ELEMENTS = [
       <div class="sec-rule"></div>
       <p class="sec-sub show-en">A selection of the vinyl records he loved — a window into the music that filled his home.</p>
     </header>
+    <!-- LISTEN — the four playable records -->
+    <div class="record-group-header">
+      <span class="record-group-label show-en">Listen</span>
+      <p class="record-group-note show-en">Four recordings preserved from his collection — set one on the turntable.</p>
+    </div>
+
     <!-- CRATE FLIP -->
     <div class="crate-outer">
       <div class="crate-scene" id="crate-scene">
@@ -2048,7 +2136,7 @@ const ELEMENTS = [
       </div>
       <div class="crate-nav">
         <button class="crate-arrow" id="crate-prev" aria-label="Previous record">&#8592;</button>
-        <span class="crate-counter" id="crate-counter">1 / 8</span>
+        <span class="crate-counter" id="crate-counter">1 / 4</span>
         <button class="crate-arrow" id="crate-next" aria-label="Next record">&#8594;</button>
       </div>
     </div>
@@ -2090,6 +2178,15 @@ const ELEMENTS = [
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
         <span class="show-en">Stop &amp; Eject</span>
       </button>
+    </div>
+
+    <!-- THE COLLECTION — archival sleeves, no recordings preserved -->
+    <div class="archive-block">
+      <div class="record-group-header">
+        <span class="record-group-label show-en">The Collection</span>
+        <p class="record-group-note show-en">The rest of his shelf survives as artefacts — sleeves without sound.</p>
+      </div>
+      <div class="archive-grid" id="archive-grid"></div>
     </div>
 
   </div>
@@ -2500,12 +2597,23 @@ function playAudio(trackIndex) {
   if (!player) {
     player = document.createElement('audio');
     player.id = 'tt-audio-player';
+    player.addEventListener('ended', stopRecord);
     document.body.appendChild(player);
   }
   player.pause();
   player.src = record.audio;
   player.play().catch(() => {});
 }
+
+/* ---- The Collection — archival sleeves, deliberately inert ---- */
+document.getElementById('archive-grid').innerHTML = ARCHIVE_RECORDS.map((r, i) => `
+  <figure class="archive-item">
+    <div class="archive-disc">
+      <img src="${r.src}" alt="Record sleeve from his collection — no recording preserved" loading="lazy">
+    </div>
+    <figcaption>${r.title ? r.title + ' · ' : ''}No recording preserved</figcaption>
+  </figure>
+`).join('');
 
 /* ---- Gallery ---- */
 document.getElementById('gallery-grid').innerHTML = PHOTOS.map((p, i) => `
@@ -2587,7 +2695,7 @@ mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => 
 
 /* ---- Scroll-reveal choreography ---- */
 const revealTargets = document.querySelectorAll(
-  '.sec-header, #elements-grid, #awards-grid, #medals-grid, #gallery-grid, #pub-pdfs, .pub-profiles, .crate-outer, .turntable-section'
+  '.sec-header, #elements-grid, #awards-grid, #medals-grid, #gallery-grid, #pub-pdfs, .pub-profiles, .record-group-header, .crate-outer, .turntable-section, #archive-grid'
 );
 const inViewObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
