@@ -1297,14 +1297,15 @@ section { padding: 5rem 2rem; }
   border-top: 1px solid var(--parchment-dark);
 }
 .archive-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 150px));
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 2rem 2.5rem;
 }
 .archive-item {
   margin: 0;
   text-align: center;
+  width: 150px;
 }
 .archive-disc {
   position: relative;
@@ -1342,7 +1343,7 @@ section { padding: 5rem 2rem; }
 
 /* Mobile crate adjustments */
 @media (max-width: 640px) {
-  .archive-grid { grid-template-columns: repeat(2, minmax(100px, 130px)); }
+  .archive-item { width: 124px; }
   .crate-scene  { height: 260px; }
   .crate-item   { width: 170px; height: 170px; }
   .crate-play-btn { width: 64px; height: 64px; opacity: 0.35; }
