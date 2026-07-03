@@ -54,8 +54,6 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font-family: inherit; }
 
-/* Language visibility */
-
 /* ================================================================
    NAV
 ================================================================ */
@@ -101,18 +99,6 @@ button { cursor: pointer; font-family: inherit; }
   white-space: nowrap;
 }
 .nav-links a:hover { color: var(--gold); }
-
-.lang-btn {
-  background: none;
-  border: 1px solid rgba(170,104,40,0.5);
-  color: var(--copper-light);
-  font-size: 0.8rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 2px;
-  transition: all 0.2s;
-  justify-self: end;
-}
-.lang-btn:hover { background: var(--copper); color: var(--parchment); border-color: var(--copper); }
 
 /* ================================================================
    HERO
@@ -347,24 +333,9 @@ section { padding: 5rem 2rem; }
 }
 .elements-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
 }
-.el-tile {
-  height: 48px;
-  border: 1px solid rgba(196,160,53,0.4);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  line-height: 1;
-  font-family: var(--font-display);
-  color: var(--gold);
-  opacity: 0.7;
-  transition: opacity 0.2s, border-color 0.2s;
-}
-.el-tile:hover { opacity: 1; border-color: var(--gold); }
-.el-tile .en   { font-size: 0.42rem; margin-bottom: 1px; }
-.el-tile .sym  { font-size: 0.95rem; font-weight: 600; }
-.el-tile .name { font-size: 0.3rem; color: var(--copper-light); margin-top: 1px; }
 
 .curve-panel {
   background: var(--green-deep);
@@ -700,52 +671,6 @@ section { padding: 5rem 2rem; }
 ================================================================ */
 #records { background: var(--parchment-mid); }
 
-.records-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
-}
-.record-card {
-  position: relative; aspect-ratio: 1; border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-  transition: transform 0.35s, box-shadow 0.35s;
-  cursor: pointer;
-}
-.record-card:hover { transform: scale(1.04) rotate(3deg); box-shadow: 0 14px 40px rgba(0,0,0,0.45); }
-.record-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-.record-card::before {
-  content: ''; position: absolute; inset: 0; border-radius: 50%;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
-  pointer-events: none; z-index: 1;
-}
-.record-card::after {
-  content: ''; position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 14px; height: 14px;
-  border-radius: 50%; background: var(--parchment-mid); z-index: 2;
-}
-.record-audio-hint {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 48px; height: 48px; border-radius: 50%;
-  background: rgba(196,160,53,0.0);
-  border: 1px solid rgba(196,160,53,0.0);
-  z-index: 3;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s;
-}
-.record-card:hover .record-audio-hint { background: rgba(24,46,34,0.75); border-color: var(--gold); }
-.record-audio-hint svg { width: 18px; height: 18px; color: var(--gold); opacity: 0; transition: opacity 0.3s; }
-.record-card:hover .record-audio-hint svg { opacity: 1; }
-
-.records-note {
-  text-align: center; margin-top: 2.5rem;
-  font-family: var(--font-display); font-style: italic;
-  font-size: 0.82rem; color: var(--ink-light); opacity: 0.6;
-}
-
 /* ================================================================
    PHOTO GALLERY
 ================================================================ */
@@ -823,6 +748,19 @@ section { padding: 5rem 2rem; }
 .footer-copy {
   font-size: 0.68rem; color: rgba(244,237,216,0.25); font-family: var(--font-display);
 }
+
+/* Tafel-curve bookend — the motif that opens the site closes it */
+.footer-curve {
+  display: block;
+  width: 150px;
+  margin: 0 auto 1.75rem;
+  opacity: 0.45;
+}
+.footer-curve .fc-draw  { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.footer-curve .fc-point { opacity: 0; }
+#footer.drawn .fc-draw     { animation: tafelDraw 1.8s cubic-bezier(0.4, 0, 0.3, 1) both; }
+#footer.drawn .fc-cathodic { animation-delay: 0.35s; }
+#footer.drawn .fc-point    { animation: tafelFadeIn 0.8s ease 1.9s backwards; opacity: 1; }
 
 /* ================================================================
    RESPONSIVE
@@ -1201,12 +1139,6 @@ section { padding: 5rem 2rem; }
 /* ================================================================
    FEATURE 3 — METAL FLIP CARDS (bio sidebar)
 ================================================================ */
-
-/* Metal flip cards — 2-col grid, large enough to read */
-.elements-grid {
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 6px !important;
-}
 
 .el-flip-card {
   height: 130px;
@@ -1731,9 +1663,12 @@ section { padding: 5rem 2rem; }
 @media (prefers-reduced-motion: reduce) {
   #hero::before, #hero::after, #medals::before,
   .crate-item.crate-front img, .crate-item::before,
-  .footer-name, .reveal.in > *, .reveal.in > * img {
+  .footer-name, .reveal.in > *, .reveal.in > * img,
+  #footer.drawn .fc-draw, #footer.drawn .fc-point {
     animation: none !important;
   }
+  .footer-curve .fc-draw  { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .footer-curve .fc-point { opacity: 1; }
   .reveal:not(.in) > * { opacity: revert; }
   #mobile-menu, #mobile-menu a, .portrait-wrap, .medal-card::after { transition: none; }
 }
@@ -2305,7 +2240,7 @@ const ELEMENTS = [
         </div>
       </div>
       <!-- Now Playing + Stop -->
-      <div class="turntable-nowplaying" id="turntable-nowplaying">
+      <div class="turntable-nowplaying" id="turntable-nowplaying" aria-live="polite">
         <span class="np-idle show-en">— Click a record to play —</span>
       </div>
       <button class="tt-stop-btn" id="tt-stop-btn" aria-label="Stop and eject record" style="display:none">
@@ -2354,6 +2289,11 @@ const ELEMENTS = [
      FOOTER
 ============================================================ -->
 <footer id="footer" role="contentinfo">
+  <svg class="footer-curve" aria-hidden="true" viewBox="0 0 220 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="fc-draw fc-anodic" pathLength="1" d="M 20 95 C 60 80, 95 62, 110 55 C 128 45, 170 25, 200 15" stroke="#b87333" stroke-width="1.5"/>
+    <path class="fc-draw fc-cathodic" pathLength="1" d="M 20 15 C 60 30, 95 48, 110 55 C 128 64, 170 85, 200 95" stroke="#4a7c59" stroke-width="1.5"/>
+    <circle class="fc-point" cx="110" cy="55" r="3" fill="none" stroke="#c4a035" stroke-width="1"/>
+  </svg>
   <p class="footer-name show-en">Prof. Ahmed Medhat Shams El Din</p>
   <p class="footer-dates">Cairo, 1931 &nbsp;—&nbsp; 2008</p>
   <p class="footer-copy show-en">A family archive — built with care, to last for generations.</p>
@@ -2374,11 +2314,11 @@ window.addEventListener('scroll', () => {
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
-    entry.target.classList.add(entry.target.classList.contains('curve-panel') ? 'drawn' : 'patina');
+    entry.target.classList.add(entry.target.matches('.curve-panel, #footer') ? 'drawn' : 'patina');
     revealObserver.unobserve(entry.target);
   });
 }, { rootMargin: '0px 0px -12% 0px' });
-document.querySelectorAll('.sec-rule, .curve-panel').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.sec-rule, .curve-panel, #footer').forEach(el => revealObserver.observe(el));
 
 /* ---- Feature 3: Metal flip cards ---- */
 document.getElementById('elements-grid').innerHTML = ELEMENTS.map(el => `
@@ -2533,9 +2473,9 @@ const playBtnSVG = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="tr
 const crateTrack = document.getElementById('crate-track');
 
 crateTrack.innerHTML = RECORDS.map((r, i) => `
-  <div class="crate-item" data-index="${i}" aria-label="Vinyl record ${i+1}">
-    <img src="${r.src}" alt="Vinyl record ${i+1}" loading="lazy">
-    <div class="crate-play-btn" aria-label="Play record ${i+1}">${playBtnSVG}</div>
+  <div class="crate-item" data-index="${i}" role="button" aria-label="Play: ${r.title} — ${r.artist}">
+    <img src="${r.src}" alt="Record sleeve: ${r.title} — ${r.artist}" loading="lazy">
+    <div class="crate-play-btn" aria-hidden="true">${playBtnSVG}</div>
   </div>
 `).join('');
 
@@ -2576,6 +2516,7 @@ function renderCrate(animated) {
     el.style.zIndex     = t.zIndex;
     el.classList.toggle('crate-front', pos === 0);
     el.style.pointerEvents = pos === 0 ? 'auto' : 'none';
+    el.tabIndex = pos === 0 ? 0 : -1;   /* only the front record is keyboard-reachable */
   });
   document.getElementById('crate-counter').textContent = `${crateIndex + 1} / ${RECORDS.length}`;
   document.getElementById('crate-prev').disabled = crateIndex === 0;
@@ -2603,14 +2544,18 @@ function crateGoTo(newIndex) {
 /* Drag / swipe events */
 const crateScene = document.getElementById('crate-scene');
 
+let crateMoved = false;  /* suppress the click that follows a drag */
+
 function onDragStart(x) {
   crateDragging = true;
   crateDragStartX = x;
   crateDragOffset = 0;
+  crateMoved = false;
 }
 function onDragMove(x) {
   if (!crateDragging) return;
   crateDragOffset = x - crateDragStartX;
+  if (Math.abs(crateDragOffset) > 8) crateMoved = true;
   renderCrateDrag(-crateDragOffset / 1.5);  /* slight resistance feel */
 }
 function onDragEnd() {
@@ -2636,6 +2581,7 @@ document.getElementById('crate-next').addEventListener('click', () => crateGoTo(
 crateTrack.addEventListener('click', e => {
   const item = e.target.closest('.crate-item');
   if (!item) return;
+  if (crateMoved) { crateMoved = false; return; }  /* that was a drag, not a click */
   const idx = parseInt(item.dataset.index, 10);
   if (idx !== crateIndex) {
     crateGoTo(idx);
@@ -2643,6 +2589,15 @@ crateTrack.addEventListener('click', e => {
   }
   /* Click on front record = play */
   playRecord(idx);
+});
+
+/* Keyboard: Enter/Space on the front record plays it */
+crateTrack.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const item = e.target.closest('.crate-item');
+  if (!item) return;
+  e.preventDefault();
+  playRecord(parseInt(item.dataset.index, 10));
 });
 
 /* Initial render */
