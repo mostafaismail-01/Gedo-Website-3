@@ -6,7 +6,7 @@
 <title>Prof. Ahmed Medhat Shams El Din — Digital Legacy Archive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
 /* ================================================================
@@ -493,16 +493,21 @@ section { padding: 5rem 2rem; }
   color: var(--copper-light); font-family: var(--font-display);
 }
 .pdf-title {
-  font-size: 0.95rem; color: var(--parchment);
-  line-height: 1.55;
+  font-family: 'Amiri', var(--font-serif);
+  font-size: 1.05rem; color: var(--parchment);
+  line-height: 1.75;
 }
-.pdf-dl {
+.pdf-actions {
+  display: flex; gap: 1.4rem; margin-top: auto; padding-top: 0.5rem;
+  border-top: 1px solid rgba(196,160,53,0.18);
+}
+.pdf-action {
   display: inline-flex; align-items: center; gap: 0.4rem;
   font-family: var(--font-display);
   font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--gold); transition: color 0.2s; margin-top: auto;
+  color: var(--gold); transition: color 0.2s;
 }
-.pdf-dl:hover { color: var(--copper-light); }
+.pdf-action:hover { color: var(--copper-light); }
 
 /* filters */
 .pub-filters {
@@ -2410,12 +2415,16 @@ document.getElementById('timeline-list').innerHTML = TIMELINE.map(t => `
 
 /* ---- PDF books ---- */
 const dlIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`;
+const readIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>`;
 document.getElementById('pub-pdfs').innerHTML = PDFS.map(p => `
-  <a class="pdf-card" href="${encodeURIComponent(p.file)}" download aria-label="Download: ${p.title}">
+  <div class="pdf-card">
     <span class="pdf-lang">Arabic · PDF Book</span>
-    <span class="pdf-title">${p.title}</span>
-    <span class="pdf-dl">${dlIcon} <span class="show-en">Download</span></span>
-  </a>
+    <span class="pdf-title" lang="ar" dir="rtl">${p.title}</span>
+    <div class="pdf-actions">
+      <a class="pdf-action" href="${encodeURIComponent(p.file)}" target="_blank" rel="noopener" aria-label="Read: ${p.title}">${readIcon} <span class="show-en">Read</span></a>
+      <a class="pdf-action" href="${encodeURIComponent(p.file)}" download aria-label="Download: ${p.title}">${dlIcon} <span class="show-en">Download</span></a>
+    </div>
+  </div>
 `).join('');
 
 /* ---- Publications ---- */
