@@ -1848,9 +1848,7 @@ const ELEMENTS = [
   </a>
   <ul class="nav-links" role="list">
     <li><a href="#biography"    data-en="Biography">Biography</a></li>
-    <!-- Timeline hidden for now — restore by uncommenting this link and the section below
     <li><a href="#timeline"     data-en="Timeline">Timeline</a></li>
-    -->
     <li><a href="#publications" data-en="Research">Research</a></li>
     <li><a href="#awards"       data-en="Awards">Awards</a></li>
     <li><a href="#medals"       data-en="Medals">Medals</a></li>
@@ -1864,11 +1862,12 @@ const ELEMENTS = [
 
 <div id="mobile-menu" aria-hidden="true">
   <a href="#biography"    style="--i:0">Biography</a>
-  <a href="#publications" style="--i:1">Research</a>
-  <a href="#awards"       style="--i:2">Awards</a>
-  <a href="#medals"       style="--i:3">Medals</a>
-  <a href="#records"      style="--i:4">Records</a>
-  <a href="#gallery"      style="--i:5">Gallery</a>
+  <a href="#timeline"     style="--i:1">Timeline</a>
+  <a href="#publications" style="--i:2">Research</a>
+  <a href="#awards"       style="--i:3">Awards</a>
+  <a href="#medals"       style="--i:4">Medals</a>
+  <a href="#records"      style="--i:5">Records</a>
+  <a href="#gallery"      style="--i:6">Gallery</a>
   <div class="mm-rule" aria-hidden="true"></div>
 </div>
 
@@ -2028,7 +2027,6 @@ const ELEMENTS = [
 <!-- ============================================================
      TIMELINE
 ============================================================ -->
-<!-- Timeline hidden for now — uncomment to restore (also restore the nav link and the render block in the JS)
 <section id="timeline" aria-labelledby="timeline-heading">
   <div class="container">
     <header class="sec-header">
@@ -2039,7 +2037,6 @@ const ELEMENTS = [
     <div class="timeline-list" id="timeline-list" role="list"></div>
   </div>
 </section>
--->
 
 <!-- ============================================================
      PUBLICATIONS
@@ -2270,15 +2267,15 @@ function flipCard(card) {
   card.classList.toggle('flipped');
 }
 
-/* ---- Timeline (hidden for now — uncomment along with the section HTML to restore) ----
+/* ---- Timeline ----
+   Approximate years are shown honestly as "c." rather than guessed.
+   The `note` field (unconfirmed details) is kept in the data but never rendered. */
 document.getElementById('timeline-list').innerHTML = TIMELINE.map(t => `
   <div class="tl-item" role="listitem">
-    <span class="tl-year">${t.year}${t.note ? ' *' : ''}</span>
+    <span class="tl-year">${t.year.replace('~', 'c. ')}</span>
     <div class="tl-title show-en">${t.en}</div>
-    ${t.note ? `<div class="tl-note">[${t.note}]</div>` : ''}
   </div>
 `).join('');
-*/
 
 /* ---- PDF books ---- */
 const dlIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`;
@@ -2696,7 +2693,7 @@ mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => 
 
 /* ---- Scroll-reveal choreography ---- */
 const revealTargets = document.querySelectorAll(
-  '.sec-header, #elements-grid, #awards-grid, #medals-grid, #gallery-grid, #pub-pdfs, .pub-profiles, .record-group-header, .crate-outer, .turntable-section, #archive-grid'
+  '.sec-header, #timeline-list, #elements-grid, #awards-grid, #medals-grid, #gallery-grid, #pub-pdfs, .pub-profiles, .record-group-header, .crate-outer, .turntable-section, #archive-grid'
 );
 const inViewObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
