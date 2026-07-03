@@ -54,6 +54,25 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font-family: inherit; }
 
+/* Keyboard focus — visible everywhere, gold like the rest of the accents */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* Skip link — hidden until focused */
+.skip-link {
+  position: fixed;
+  top: 8px; left: 8px; z-index: 300;
+  background: var(--green-deep);
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--copper);
+  transform: translateY(-200%);
+  transition: transform 0.2s;
+}
+.skip-link:focus { transform: none; }
+
 /* ================================================================
    NAV
 ================================================================ */
@@ -769,11 +788,11 @@ section { padding: 5rem 2rem; }
   .bio-grid { grid-template-columns: 1fr; }
   .bio-sidebar { position: static; }
   .gallery-grid { columns: 2; }
+  .nav-links { display: none; }  /* eight links don't fit — burger takes over */
 }
 @media (max-width: 640px) {
   html { font-size: 16px; }
   section { padding: 3.5rem 1.25rem; }
-  .nav-links { display: none; }
   .gallery-grid { columns: 2; }
 }
 
@@ -1522,8 +1541,8 @@ section { padding: 5rem 2rem; }
   opacity: 0; transition: opacity 0.6s ease 0.45s;
 }
 #mobile-menu.open .mm-rule { opacity: 1; }
-@media (max-width: 640px) { .nav-burger { display: flex; } }
-@media (min-width: 641px) { #mobile-menu { display: none; } }
+@media (max-width: 900px) { .nav-burger { display: flex; } }
+@media (min-width: 901px) { #mobile-menu { display: none; } }
 
 /* ================================================================
    FEATURE — PATINA SCROLL PROGRESS BAR
@@ -1676,6 +1695,8 @@ section { padding: 5rem 2rem; }
 </style>
 </head>
 <body>
+
+<a class="skip-link" href="#biography">Skip to content</a>
 
 <!-- ============================================================
      CONTENT DATA — edit these to add/update content
@@ -2313,11 +2334,14 @@ window.addEventListener('scroll', () => {
 /* ---- Scroll-triggered effects: patina rules + Tafel curve draw ---- */
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
+    /* elements already scrolled past (restored scroll position, #anchor
+       links) must count as seen, or they'd stay in their pre-reveal state */
+    if (!entry.isIntersecting && entry.boundingClientRect.top >= 0) return;
     entry.target.classList.add(entry.target.matches('.curve-panel, #footer') ? 'drawn' : 'patina');
     revealObserver.unobserve(entry.target);
   });
-}, { rootMargin: '0px 0px -12% 0px' });
+  /* the huge top margin makes anything above the viewport count as seen */
+}, { rootMargin: '100000px 0px -12% 0px' });
 document.querySelectorAll('.sec-rule, .curve-panel, #footer').forEach(el => revealObserver.observe(el));
 
 /* ---- Feature 3: Metal flip cards ---- */
@@ -2741,11 +2765,13 @@ document.querySelectorAll('.gallery-item, .medal-card').forEach(el => {
 const lb = document.getElementById('lightbox');
 const lbImg = document.getElementById('lightbox-img');
 let lbData = [], lbIndex = 0;
+let lbTrigger = null;  /* element to restore focus to on close */
 
 function openLightbox(i) {
   lbData = PHOTOS; lbIndex = i;
   lbImg.src = PHOTOS[i].src;
   lbImg.alt = PHOTOS[i].caption || 'Photograph ' + (i+1);
+  lbTrigger = document.activeElement;
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('lightbox-close').focus();
@@ -2754,11 +2780,17 @@ function openMedalLightbox(i) {
   lbData = MEDALS; lbIndex = i;
   lbImg.src = MEDALS[i].src;
   lbImg.alt = 'Medal ' + (i+1);
+  lbTrigger = document.activeElement;
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('lightbox-close').focus();
 }
-function closeLightbox() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+function closeLightbox() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+  if (lbTrigger && document.contains(lbTrigger)) lbTrigger.focus();
+  lbTrigger = null;
+}
 function lightboxNav(dir) {
   lbIndex = (lbIndex + dir + lbData.length) % lbData.length;
   lbImg.src = lbData[lbIndex].src;
@@ -2807,17 +2839,36 @@ const revealTargets = document.querySelectorAll(
 );
 const inViewObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
+    /* same above-the-viewport guard as revealObserver */
+    if (!entry.isIntersecting && entry.boundingClientRect.top >= 0) return;
     entry.target.classList.add('in');
     inViewObserver.unobserve(entry.target);
   });
-}, { rootMargin: '0px 0px -8% 0px' });
+  /* the huge top margin makes anything above the viewport count as seen */
+}, { rootMargin: '100000px 0px -8% 0px' });
 revealTargets.forEach(el => {
   el.classList.add('reveal');
   Array.from(el.children).forEach((child, i) => child.style.setProperty('--i', Math.min(i, 12)));
   if (prefersReducedMotion) { el.classList.add('in'); return; }
   inViewObserver.observe(el);
 });
+
+/* Safety net alongside the IntersectionObservers: on every scroll, any
+   still-unrevealed element whose top has entered the visible band (or that
+   was skipped past entirely — restored scroll positions, #anchor loads,
+   embeds where observers are unreliable) is marked as seen. Cheap — the
+   selector shrinks to nothing as elements reveal. */
+function revealSweep() {
+  const limit = window.innerHeight * 0.92;
+  document.querySelectorAll('.reveal:not(.in), .sec-rule:not(.patina), .curve-panel:not(.drawn), #footer:not(.drawn)')
+    .forEach(el => {
+      if (el.getBoundingClientRect().top >= limit) return;
+      el.classList.add(el.matches('.curve-panel, #footer') ? 'drawn'
+                     : el.matches('.sec-rule')            ? 'patina' : 'in');
+    });
+}
+window.addEventListener('scroll', revealSweep, { passive: true });
+revealSweep();
 
 /* ---- Medal cards: museum tilt toward the cursor ---- */
 if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
